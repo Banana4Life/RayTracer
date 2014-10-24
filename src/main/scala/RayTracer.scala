@@ -1,9 +1,8 @@
-import java.awt.{Color, Rectangle, Dimension}
+import java.awt.Color
 import java.util.concurrent.{TimeUnit, Executors}
-import javax.swing.{WindowConstants, JFrame}
+import javax.swing.WindowConstants
 
 import scala.swing.Swing._
-import scala.swing.event.{MousePressed, MouseEntered, ButtonClicked}
 import scala.swing._
 
 object RayTracer extends SimpleSwingApplication {
@@ -13,10 +12,12 @@ object RayTracer extends SimpleSwingApplication {
 
     val top = new MainFrame() {
         title = "Test Frame!"
-
         preferredSize = 640 -> 480
-
         resizable = false
+
+        var lights = Array(new LightSource(Array(new PointLight(50, 50, 100))))
+        var boxes = Array(new Box(10, 10, 10, 10, new Material(0, 100, new Color(0, 0, 0))))
+        var environment = new Environment(preferredSize, lights, boxes)
 
         reactions += {
             case e => println(e.getClass.getName)
@@ -29,23 +30,17 @@ object RayTracer extends SimpleSwingApplication {
         }
 
         val panel = new Panel {
-
-            var i = 0
-            var s = -1
-
             override def paint(g: Graphics2D): Unit = {
                 super.paint(g)
 
-                g.setColor(Color.RED)
-                g.drawString("lulzz", 100 + i, 100 + i * s)
-                i += 1
-                s *= -1
+                g.drawImage(environment, 0, 0, null)
             }
         }
 
         contents = panel
 
         executorService.scheduleAtFixedRate({
+            environment.update()
             panel.repaint()
         }, 33, 33, TimeUnit.MILLISECONDS)
 
