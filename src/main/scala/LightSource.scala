@@ -1,9 +1,9 @@
-import java.awt.image.BufferedImage
+import java.awt.Graphics
 
 class LightSource(pointLights: Array[PointLight]) {
-    def renderShadow(image: BufferedImage, box: Box, lightCount: Int) = {
+    def renderShadow(g: Graphics, box: Box, lightCount: Int) = {
         for (pointLight <- pointLights) {
-            pointLight.renderShadow(image, box, lightCount)
+            pointLight.renderShadow(g, box, lightCount)
         }
     }
 

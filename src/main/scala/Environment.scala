@@ -9,7 +9,7 @@ class Environment(dim: Dimension, lightSources: Array[LightSource], boxes: Array
         this.getGraphics.fillRect(0, 0, this.getWidth, this.getHeight)
         for (lightSource <- lightSources) {
             for (box <- boxes) {
-                lightSource.renderShadow(this, box, this.lightCount)
+                lightSource.renderShadow(this.getGraphics, box, this.lightCount)
                 box.render(this.getGraphics)
             }
         }
