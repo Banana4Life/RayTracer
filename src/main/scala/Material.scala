@@ -1,5 +1,4 @@
-import java.awt.Color
+import util.Color
 
-class Material(scatter: Int, absorption: Int, color: Color) {
-    def getColor = color
+case class Material(scatter: Int, absorption: Int, color: Color) {
 }

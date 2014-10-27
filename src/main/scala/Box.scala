@@ -1,11 +1,11 @@
 import java.awt.{Graphics, Rectangle}
 import util.Point
 
-class Box(a: Int, b: Int, c: Int, d: Int, material: Material) extends Rectangle(a, b, c, d) {
+case class Box(a: Int, b: Int, c: Int, d: Int, material: Material) extends Rectangle(a, b, c, d) {
     implicit def Double2Int(d: Double) = d.toInt
 
     def render(g: Graphics) {
-        g.setColor(material.getColor)
+        g.setColor(material.color)
         g.fillRect(getX, getY, getWidth, getHeight)
     }
 
