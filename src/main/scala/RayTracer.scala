@@ -11,12 +11,12 @@ object RayTracer extends SimpleSwingApplication {
     val executorService = Executors.newSingleThreadScheduledExecutor()
 
     val top = new MainFrame() {
-        title = "Test Frame!"
+        title = "Ray Tracer"
         preferredSize = 640 -> 480
         resizable = false
 
-        var lights = Array(new LightSource(Array(new PointLight(50, 50, 100), new PointLight(40, 5, 100))))
-        var boxes = Array(new Box(10, 10, 10, 10, new Material(0, 100, new Color(0, 0, 0))))
+        var lights = Array(new LightSource(Array(new PointLight(100, 100, 100))))
+        var boxes = Array(new Box(10, 290, 50, 50, new Material(0, 100, new Color(255, 0, 0))), new Box(300, 200, 40, 50, new Material(0, 100, new Color(0, 255, 0))))
         var environment = new Environment(preferredSize, lights, boxes)
 
         reactions += {

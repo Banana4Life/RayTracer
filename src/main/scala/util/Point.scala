@@ -7,6 +7,8 @@ case class Point(a: Int, b: Int) extends java.awt.Point(a, b) {
     def this(point: java.awt.Point) = this(point.x, point.y)
 
     def - (point: Point) = new Point(this.x - point.x, this.y - point.y)
+    def + (point: Point) = new Point(this.x + point.x, this.y + point.y)
+    def * (k: Double) = new Point(this.x * k, this.y * k)
 
     def angle = math.atan2(y, x)
 }

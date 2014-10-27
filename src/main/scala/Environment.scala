@@ -1,22 +1,22 @@
-import java.awt.{AlphaComposite, Graphics2D, Color}
+import java.awt.Graphics2D
 import java.awt.image.BufferedImage
+
+import util.LightMap
 
 import scala.swing.Dimension
 
-class Environment(dim: Dimension, lightSources: Array[LightSource], boxes: Array[Box]) extends BufferedImage(dim.getWidth.toInt, dim.getHeight.toInt, BufferedImage.TYPE_INT_ARGB) {
+class Environment(dim: Dimension, lightSources: Array[LightSource], boxes: Array[Box]) extends BufferedImage(dim.getWidth.toInt, dim.getHeight.toInt, BufferedImage.TYPE_INT_ARGB) with LightMap {
+    override var lightMap: Array[Array[Double]] = LightMap.newMap(dim)
+
     def update() {
-        val g2D = this.getGraphics.asInstanceOf[Graphics2D]
-        g2D.setColor(Color.WHITE)
-        g2D.fillRect(0, 0, this.getWidth, this.getHeight)
-        g2D.setColor(new Color(0, 0, 0, 1f / this.lightCount))
-        g2D.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER))
         for (lightSource <- lightSources) {
             for (box <- boxes) {
-                lightSource.renderShadow(g2D, box)
+                lightSource.drawShadow(this, box, lightCount)
             }
         }
+        render(this)
         for (box <- boxes) {
-            box.render(g2D)
+            box.render(getGraphics.asInstanceOf[Graphics2D])
         }
     }
 

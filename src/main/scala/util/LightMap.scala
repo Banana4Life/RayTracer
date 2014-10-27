@@ -1,28 +1,80 @@
 package util
 
+import java.awt.Color
+import java.awt.image.BufferedImage
+
 import scala.swing.Dimension
 
-class LightMap(var lightMap: Array[Array[Int]]) {
-    def this(dim: Dimension) = this(LightMap.newMap(dim))
+trait LightMap {
+    var lightMap: Array[Array[Double]]
 
-    def rasterize(shadow: (Ray, Point, Ray)) {
-        lightMap = LightMap.rasterize(shadow, lightMap)
+    def rasterize(shadow: (Ray, Point, Ray))(lightCount: Int) {
+        lightMap = LightMap.rasterize(shadow)(lightMap, lightCount)(lightMap.length, lightMap(0).length)
     }
+    def render(image: BufferedImage) = LightMap.render(image, lightMap)
 }
 
 object LightMap {
-    def newMap(dim: Dimension): Array[Array[Int]] = {
-        val lightMap = new Array[Array[Int]](dim.getWidth.toInt)
+    var colorMap: Map[Double, Int] = Map()
+
+    def newMap(dim: Dimension): Array[Array[Double]] = {
+        val lightMap = new Array[Array[Double]](dim.getWidth.toInt)
         for (x <- 0 to dim.getWidth.toInt - 1) {
-            lightMap(x) = new Array[Int](dim.getHeight.toInt)
+            lightMap(x) = new Array[Double](dim.getHeight.toInt)
             for (y <- 0 to dim.getHeight.toInt - 1) {
-                lightMap(x)(y) = 0
+                lightMap(x)(y) = 1
             }
         }
         lightMap
     }
 
-    def rasterize(shadow: (Ray, Point, Ray), lightMap: Array[Array[Int]]): Array[Array[Int]] = {
-        return lightMap
+    def rasterize(shadow: (Ray, Point, Ray))(lightMap: Array[Array[Double]], lightCount: Int)(width: Int, height: Int): Array[Array[Double]] = {
+        var activeEdgeList: List[(Int, Double, Double, Int)] = List()
+        activeEdgeList ::= getActiveEdge(new Ray(getBorderIntersection(shadow._1)(width, height), shadow._1.getAnchor2))
+        activeEdgeList ::= getActiveEdge(new Ray(shadow._1.getAnchor2, shadow._2))
+        activeEdgeList ::= getActiveEdge(new Ray(shadow._2, shadow._3.getAnchor2))
+        activeEdgeList ::= getActiveEdge(new Ray(shadow._3.getAnchor2, getBorderIntersection(shadow._3)(width, height)))
+        if (getBorderIntersection(shadow._1)(width, height).x == 0 || getBorderIntersection(shadow._3)(width, height).x == 0) activeEdgeList ::= getActiveEdge(new Ray(new Point(0, getBorderIntersection(shadow._1)(width, height).y), new Point(0, getBorderIntersection(shadow._3)(width, height).y)))
+        rasterize(activeEdgeList)(lightMap, lightCount)(width, height)
+    }
+    def rasterize(edgeList: List[(Int, Double, Double, Int)])(lightMap: Array[Array[Double]], lightCount: Int)(width: Int, height: Int): Array[Array[Double]] = {
+        var y = 0
+        var activeEdgeList = edgeList
+        while(activeEdgeList.length > 0 && y < height) {
+            activeEdgeList = activeEdgeList.sortWith((a, b) => if (a._1 == b._1) a._2 < b._2 else a._1 < b._1)
+            while(y == activeEdgeList(0)._1) {
+                for (x <- activeEdgeList(0)._2.toInt to (if (activeEdgeList.length > 1 && y == activeEdgeList(1)._1) activeEdgeList(1)._2.toInt else width) - 1) {
+                    lightMap(x)(y) = if (lightMap(x)(y) - 1 / lightCount.toDouble > 0) lightMap(x)(y) - 1 / lightCount.toDouble else 0
+                }
+                activeEdgeList = activeEdgeList.updated(0, incrementEdge(activeEdgeList(0)))
+                if (activeEdgeList.length > 1 && y == activeEdgeList(1)._1) activeEdgeList = activeEdgeList.updated(1, incrementEdge(activeEdgeList(1)))
+            }
+            activeEdgeList = activeEdgeList.filter(a => a._4 != 0)
+            y += 1
+        }
+        lightMap
+    }
+
+    def incrementEdge(edge: (Int, Double, Double, Int)): (Int, Double, Double, Int) = {
+        (edge._1 + 1, edge._2 + edge._3, edge._3, edge._4 - 1)
+    }
+
+    def getActiveEdge(ray: Ray): (Int, Double, Double, Int) = {
+        val anchor = if (ray.getAnchor1.y < ray.getAnchor2.y) ray.getAnchor1 else ray.getAnchor2
+        (anchor.y, anchor.x, if (ray.direction.y != 0) ray.direction.x / ray.direction.y.toDouble else 0, math.abs(ray.direction.y))
+    }
+    def getBorderIntersection(ray: Ray)(width: Int, height: Int): Point = {
+        ray.getFor(math.min(math.max((0 - ray.getAnchor1.x) / ray.direction.x.toDouble, (width - ray.getAnchor1.x) / ray.direction.x.toDouble), math.max((0 - ray.getAnchor1.y) / ray.direction.y.toDouble, (height - ray.getAnchor1.y) / ray.direction.y.toDouble)))
+    }
+
+    def render(image: BufferedImage, lightMap: Array[Array[Double]]) {
+        for (x <- 0 to math.max(0, math.min(lightMap.length, image.getWidth) - 1)) {
+            for (y <- 0 to math.max(0, math.min(lightMap(0).length, image.getHeight) - 1)) {
+                if (!colorMap.contains(lightMap(x)(y))) {
+                    colorMap += (lightMap(x)(y) -> new Color(lightMap(x)(y).toFloat, lightMap(x)(y).toFloat, lightMap(x)(y).toFloat).getRGB)
+                }
+                image.setRGB(x, y, colorMap(lightMap(x)(y)))
+            }
+        }
     }
 }

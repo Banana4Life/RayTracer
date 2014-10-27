@@ -1,9 +1,9 @@
-import java.awt.Graphics2D
+import util.LightMap
 
 class LightSource(pointLights: Array[PointLight]) {
-    def renderShadow(g2D: Graphics2D, box: Box) = {
+    def drawShadow(lightMap: LightMap, box: Box, lightCount: Int) = {
         for (pointLight <- pointLights) {
-            pointLight.renderShadow(g2D, box)
+            pointLight.renderShadow(lightMap, box, lightCount)
         }
     }
 
