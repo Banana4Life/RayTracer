@@ -15,8 +15,9 @@ object RayTracer extends SimpleSwingApplication {
         preferredSize = 640 -> 480
         resizable = false
 
-        var lights = Array(new LightSource(Array(new PointLight(100, 100, 100))))
-        var boxes = Array(new Box(10, 290, 50, 50, new Material(0, 100, new Color(255, 0, 0))), new Box(300, 200, 40, 50, new Material(0, 100, new Color(0, 255, 0))))
+        var lights = Array(new LightSource(Array(new PointLight(100, 100, 100))), new LightSource(Array(new PointLight(200, 100, 100))))
+        var boxes = Array(new Box(40, 290, 50, 50, new Material(0, 100, new Color(255, 0, 0))), new Box(300, 200, 40, 50, new Material(0, 100, new Color(0, 255, 0)))
+            , new Box(30, 30, 20, 50, new Material(0, 100, new Color(0, 0, 255))), new Box(350, 250, 20, 50, new Material(0, 100, new Color(0, 255, 255))))
         var environment = new Environment(preferredSize, lights, boxes)
 
         reactions += {
