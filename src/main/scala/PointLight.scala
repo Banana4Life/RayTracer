@@ -1,11 +1,11 @@
-import java.awt.{Graphics, Color, Polygon}
+import java.awt.{Graphics2D, Polygon}
 
-import util.Point
+import util.{Ray, Point}
 
 class PointLight(a: Int, b: Int, brightness: Int) extends Point(a, b) {
     implicit def Tupel32Tupel2(t: (Double, Ray, Ray)) = (t._2, t._3)
 
-    def renderShadow(g: Graphics, box: Box, lightCount: Int) = {
+    def renderShadow(g2D: Graphics2D, box: Box) = {
         val rays = new Array[Ray](4)
         val vertices = box.getVertices
         for (i <- 0 to 3) {
@@ -16,8 +16,8 @@ class PointLight(a: Int, b: Int, brightness: Int) extends Point(a, b) {
         val shadow = new Polygon(Array(ray1.getAnchor2.getX.toInt, vertex.getX.toInt, ray2.getAnchor2.getX.toInt, 0),
                                  Array(ray1.getAnchor2.getY.toInt, vertex.getY.toInt, ray2.getAnchor2.getY.toInt, 0),
                                  4)
-        g.setColor(Color.BLACK)
-        g.fillPolygon(shadow)
+        g2D.fillPolygon(shadow)
+
     }
 
     def getFurthest(ray: Ray, rays: Array[Ray]): (Ray, Ray) = {

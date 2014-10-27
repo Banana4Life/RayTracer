@@ -1,4 +1,4 @@
-import util.Point
+package util
 
 class Ray(anchor1: Point, anchor2: Point) {
     val direction = anchor2 - anchor1
