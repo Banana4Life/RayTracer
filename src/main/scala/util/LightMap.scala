@@ -1,6 +1,5 @@
 package util
 
-import java.awt.Color
 import java.awt.image.BufferedImage
 
 import scala.swing.Dimension
@@ -72,7 +71,7 @@ object LightMap {
         for (x <- 0 to math.max(0, math.min(lightMap.length, image.getWidth) - 1)) {
             for (y <- 0 to math.max(0, math.min(lightMap(0).length, image.getHeight) - 1)) {
                 if (!colorMap.contains(lightMap(x)(y)._1)) {
-                    colorMap += (lightMap(x)(y)._1 -> new Color(0, 0, 0, 1 - lightMap(x)(y)._1.toFloat).getRGB)
+                    colorMap += (lightMap(x)(y)._1 -> new java.awt.Color(0, 0, 0, 1 - lightMap(x)(y)._1.toFloat).getRGB)
                 }
                 image.setRGB(x, y, colorMap(lightMap(x)(y)._1))
             }

@@ -3,6 +3,8 @@ import javax.swing.WindowConstants
 
 import util.Color
 
+import scala.math.abs
+import scala.collection.mutable.ArrayBuffer
 import scala.swing.Swing._
 import scala.swing._
 import scala.swing.event.{MouseReleased, MousePressed}
@@ -17,11 +19,13 @@ object RayTracer extends SimpleSwingApplication {
         preferredSize = 640 -> 480
         resizable = false
 
-        var lights = Array(
-          new LightSource(Array(new PointLight(100, 100, 100))),
-          new LightSource(Array(new PointLight(200, 100, 100)))
+
+
+        var lights = ArrayBuffer(
+          LightSource(Array(new PointLight(100, 100, 100))),
+          LightSource(Array(new PointLight(200, 100, 100)))
         )
-        var boxes = Array(
+        var boxes = ArrayBuffer(
           Box( 40, 290,  50,  50, Material(0, 100, Color(255,   0,   0))),
           Box(300, 200,  40,  50, Material(0, 100, Color(  0, 255,   0))),
           Box( 30,  30,  20,  50, Material(0, 100, Color(  0,   0, 255))),
@@ -37,25 +41,35 @@ object RayTracer extends SimpleSwingApplication {
         }
 
         val panel = new Panel {
-            override def paint(g: Graphics2D): Unit = {
-                super.paint(g)
 
-                g.drawImage(environment, 0, 0, null)
-            }
+          override protected def paintComponent(g: Graphics2D): Unit = {
+            super.paintComponent(g)
+
+            environment.update()
+            g.drawImage(environment, 0, 0, null)
+          }
 
           listenTo(mouse.clicks)
 
           var down: Point = null
           reactions += {
-            case MousePressed(_, p, _, _, _) => down = p
-            case MouseReleased(_, p, _, _, _) => p
+            case e: MousePressed => {
+              e.peer.getButton match {
+                case 1 => down = e.point
+                case 3 => environment.lightSources.append(LightSource(Array(new PointLight(e.point.x, e.point.y, 100))))
+                case _ =>
+              }
+            }
+            case e: MouseReleased =>  e.peer.getButton match {
+              case 1 => environment.boxes.append(Box(down.x, down.y, abs(e.point.x - down.x), abs(e.point.y - down.y), Material(0, 100, Color(123, 123, 123))))
+              case _ =>
+            }
           }
         }
 
         contents = panel
 
         executorService.scheduleAtFixedRate({
-            environment.update()
             panel.repaint()
         }, 33, 33, TimeUnit.MILLISECONDS)
 
