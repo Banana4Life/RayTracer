@@ -53,17 +53,66 @@ object RayTracer extends SimpleSwingApplication {
             var down: Point = null
             reactions += {
                 case e: MousePressed => {
+                    val p = e.point
                     e.peer.getButton match {
-                        case 1 => down = e.point
-                        case 3 => environment.lightSources.append(new LightSource(Array(new PointLight(e.point.x, e.point.y))))
+                        case 3 if canPlaceLightAt(p.x, p.y) => environment.lightSources.append(new LightSource(p.x, p.y))
                         case _ =>
                     }
                 }
-                case e: MouseReleased => e.peer.getButton match {
-                    case 1 => environment.boxes.append(Box(down.x - abs((e.point.x - down.x) / 2) + (e.point.x - down.x) / 2, down.y - abs((e.point.y - down.y) / 2) + (e.point.y - down.y) / 2, abs(e.point.x - down.x), abs(e.point.y - down.y), Material(0, 100, Color(123, 123, 123))))
+                case e: MouseReleased => {
+                  val p = e.point
+                  val b = Box(down.x - abs((p.x - down.x) / 2) + (p.x - down.x) / 2, down.y - abs((p.y - down.y) / 2) + (p.y - down.y) / 2, abs(p.x - down.x), abs(p.y - down.y), Material(0, 100, Color(123, 123, 123)))
+                  e.peer.getButton match {
+                    case 1 if canPlaceBoxAt(b) => environment.boxes.append(b)
                     case _ =>
+                  }
                 }
             }
+
+          private def pointInBox(b: Box, x: Int, y: Int) = x >= b.x && x < b.x + b.width && y >= b.y && y < b.y + b.height
+
+          private def pointInAnyBox(x: Int, y: Int): Boolean = {
+            for (b <- environment.boxes) {
+              if (pointInBox(b, x, y)) {
+                return true
+              }
+            }
+            false
+          }
+
+          private def canPlaceLightAt(x: Int, y: Int) = {
+            for (l <- environment.lightSources) {
+              val p = l.pointLights(0)
+              if (p.x == x && p.y == y) {
+                false
+              }
+            }
+
+            !pointInAnyBox(x, y)
+          }
+
+          private def canPlaceBoxAt(box: Box): Boolean = {
+            if (pointInAnyBox(box.x, box.y)) return false
+            if (pointInAnyBox(box.x + box.width, box.y)) return false
+            if (pointInAnyBox(box.x + box.width, box.y + box.height)) return false
+            if (pointInAnyBox(box.x, box.y + box.height)) return false
+
+            for (b <- environment.boxes) {
+              if (pointInBox(box, b.x, b.y)) return false
+              if (pointInBox(box, b.x + b.width, b.y)) return false
+              if (pointInBox(box, b.x + b.width, b.y + b.height)) return false
+              if (pointInBox(box, b.x, b.y + b.height)) return false
+            }
+
+            for (l <- environment.lightSources) {
+              val p = l.pointLights(0)
+              if (pointInBox(box, p.x, p.y)) {
+                return false
+              }
+            }
+
+            true
+          }
         }
 
         contents = panel
