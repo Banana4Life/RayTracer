@@ -2,14 +2,18 @@ import java.awt.{Color, Graphics}
 
 import util.LightMap
 
+import scala.collection.mutable.ArrayBuffer
+
 case class LightSource(pointLights: Array[PointLight]) {
     def this(x: Int, y: Int) {
         this(Array(new PointLight(x, y), new PointLight(x - 3, y), new PointLight(x, y - 3), new PointLight(x + 3, y), new PointLight(x, y + 3)))
     }
 
-    def drawShadow(lightMap: LightMap, box: Box, lightCount: Int) = {
+    def drawShadow(lightMap: LightMap, boxes: ArrayBuffer[Box], lightCount: Int) = {
         for (pointLight <- pointLights) {
-            pointLight.renderShadow(lightMap, box, lightCount)
+            for (box <- boxes) {
+                pointLight.renderShadow(lightMap, box, lightCount)
+            }
             lightMap.reset()
         }
     }

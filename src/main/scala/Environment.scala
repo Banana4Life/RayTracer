@@ -20,9 +20,7 @@ class Environment(dim: Dimension, val lightSources: ArrayBuffer[LightSource], va
         }
         for (lightSource <- lightSources) {
             lightSource.render(boxImage.getGraphics)
-            for (box <- boxes) {
-                lightSource.drawShadow(this, box, lightCount)
-            }
+            lightSource.drawShadow(this, boxes, lightCount)
         }
         render(lightImage)
         getGraphics.drawImage(boxImage, 0, 0, null)
