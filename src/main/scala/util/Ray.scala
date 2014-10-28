@@ -7,7 +7,7 @@ class Ray(anchor1: Point, anchor2: Point) {
 
     def direction = anchor2 - anchor1
 
-    def angleTo(ray: Ray) = math.abs(direction.angle - ray.direction.angle)
+    def angleTo(ray: Ray) = math.acos(this.direction * ray.direction / (this.direction.length * ray.direction.length))
 
     def getFor(k: Double) = getAnchor1 + (direction * k)
 
@@ -16,7 +16,12 @@ class Ray(anchor1: Point, anchor2: Point) {
         val d = this.direction
         val a = ray.getAnchor1
         val b = ray.direction
-        val k = (c.x + d.x * (a.y - c.y) / d.y.toDouble - a.x) / (b.x - d.x * b.y / d.y.toDouble)
-        k > 0 && k < 1
+        if (d.y != 0) {
+            val k = (c.x + d.x * (a.y - c.y) / d.y.toDouble - a.x) / (b.x - d.x * b.y / d.y.toDouble)
+            k > 0 && k < 1
+        } else {
+            if (a.y > c.y) a.y + b.y < c.y
+            else a.y + b.y > c.y
+        }
     }
 }

@@ -25,13 +25,10 @@ object RayTracer extends SimpleSwingApplication {
 
 
         var lights = ArrayBuffer(
-            new LightSource(200, 100)
+            new LightSource(Array(new PointLight(250, 150)))
         )
         var boxes = ArrayBuffer(
-            Box(40, 290, 50, 50, Material(0, 100, Color(255, 0, 0))),
-            Box(300, 200, 40, 50, Material(0, 100, Color(0, 255, 0))),
-            Box(30, 30, 20, 50, Material(0, 100, Color(0, 0, 255))),
-            Box(350, 250, 20, 50, Material(0, 100, Color(0, 255, 255)))
+            Box(200, 200, 100, 100, Material(0, 100, Color(255, 0, 0)))
         )
 
         var environment = new Environment(preferredSize, lights, boxes)
@@ -58,7 +55,7 @@ object RayTracer extends SimpleSwingApplication {
                 case e: MousePressed => {
                     e.peer.getButton match {
                         case 1 => down = e.point
-                        case 3 => environment.lightSources.append(new LightSource(e.point.x, e.point.y))
+                        case 3 => environment.lightSources.append(new LightSource(Array(new PointLight(e.point.x, e.point.y))))
                         case _ =>
                     }
                 }

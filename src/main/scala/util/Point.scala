@@ -13,5 +13,9 @@ case class Point(a: Int, b: Int) extends java.awt.Point(a, b) {
 
     def *(k: Double) = new Point(this.x * k, this.y * k)
 
+    def *(point: Point) = this.x * point.x + this.y * point.y
+
+    def length = math.sqrt(this.x * this.x + this.y * this.y)
+
     def angle = math.atan2(y, x)
 }
