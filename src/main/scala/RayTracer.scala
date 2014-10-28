@@ -55,15 +55,22 @@ object RayTracer extends SimpleSwingApplication {
                 case e: MousePressed => {
                     val p = e.point
                     e.peer.getButton match {
-                        case 3 if canPlaceLightAt(p.x, p.y) => environment.lightSources.append(new LightSource(p.x, p.y))
+                        case 1 => down = e.point
+                        case 3 if canPlaceLightAt(p.x, p.y) => {
+                          environment.lightSources.append(new LightSource(p.x, p.y))
+                          repaint()
+                        }
                         case _ =>
                     }
                 }
                 case e: MouseReleased => {
                   val p = e.point
-                  val b = Box(down.x - abs((p.x - down.x) / 2) + (p.x - down.x) / 2, down.y - abs((p.y - down.y) / 2) + (p.y - down.y) / 2, abs(p.x - down.x), abs(p.y - down.y), Material(0, 100, Color(123, 123, 123)))
+                  val b = Box(down.x - abs((p.x - down.x) / 2) + (p.x - down.x) / 2, down.y - abs((p.y - down.y) / 2) + (p.y - down.y) / 2, abs(p.x - down.x), abs(p.y - down.y), Material(0, 100, Color(255, 0, 0)))
                   e.peer.getButton match {
-                    case 1 if canPlaceBoxAt(b) => environment.boxes.append(b)
+                    case 1 if canPlaceBoxAt(b) => {
+                      environment.boxes.append(b)
+                      repaint()
+                    }
                     case _ =>
                   }
                 }
@@ -116,10 +123,6 @@ object RayTracer extends SimpleSwingApplication {
         }
 
         contents = panel
-
-        executorService.scheduleAtFixedRate({
-            panel.repaint()
-        }, 33, 33, TimeUnit.MILLISECONDS)
 
         peer.setLocationRelativeTo(null)
         peer.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE)
