@@ -5,6 +5,10 @@ import util.{LightMap, Ray, Point}
 class PointLight(a: Int, b: Int, brightness: Int) extends Point(a, b) {
     implicit def Tupel32Tupel2(t: (Double, Ray, Ray)) = (t._2, t._3)
 
+    def this(a: Int, b: Int) {
+        this(a, b, 100)
+    }
+
     def renderShadow(lightMap: LightMap, box: Box, lightCount: Int) = {
         val rays = new Array[Ray](4)
         val vertices = box.getVertices
@@ -26,12 +30,13 @@ class PointLight(a: Int, b: Int, brightness: Int) extends Point(a, b) {
         }
         furthest
     }
+
     def getFurthest(rays: Array[Ray]): (Ray, Ray) = {
         if (rays.length < 2) {
             return (rays(0), rays(0))
         }
         val furthestThis = getFurthest(rays(0), rays.drop(1))
-        val furthestAll  = getFurthest(rays.drop(1))
+        val furthestAll = getFurthest(rays.drop(1))
         if ((furthestThis._1 angleTo furthestThis._2) > (furthestAll._1 angleTo furthestAll._2)) {
             return furthestThis
         }

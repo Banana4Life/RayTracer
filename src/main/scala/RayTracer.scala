@@ -10,7 +10,11 @@ import scala.swing._
 import scala.swing.event.{MouseReleased, MousePressed}
 
 object RayTracer extends SimpleSwingApplication {
-    implicit def whateverToRunnable[F](f: => F) = new Runnable() { def run() { f } }
+    implicit def whateverToRunnable[F](f: => F) = new Runnable() {
+        def run() {
+            f
+        }
+    }
 
     val executorService = Executors.newSingleThreadScheduledExecutor()
 
@@ -20,16 +24,14 @@ object RayTracer extends SimpleSwingApplication {
         resizable = false
 
 
-
         var lights = ArrayBuffer(
-          LightSource(Array(new PointLight(100, 100, 100))),
-          LightSource(Array(new PointLight(200, 100, 100)))
+            new LightSource(200, 100)
         )
         var boxes = ArrayBuffer(
-          Box( 40, 290,  50,  50, Material(0, 100, Color(255,   0,   0))),
-          Box(300, 200,  40,  50, Material(0, 100, Color(  0, 255,   0))),
-          Box( 30,  30,  20,  50, Material(0, 100, Color(  0,   0, 255))),
-          Box(350, 250,  20,  50, Material(0, 100, Color(  0, 255, 255)))
+            Box(40, 290, 50, 50, Material(0, 100, Color(255, 0, 0))),
+            Box(300, 200, 40, 50, Material(0, 100, Color(0, 255, 0))),
+            Box(30, 30, 20, 50, Material(0, 100, Color(0, 0, 255))),
+            Box(350, 250, 20, 50, Material(0, 100, Color(0, 255, 255)))
         )
 
         var environment = new Environment(preferredSize, lights, boxes)
@@ -42,29 +44,29 @@ object RayTracer extends SimpleSwingApplication {
 
         val panel = new Panel {
 
-          override protected def paintComponent(g: Graphics2D): Unit = {
-            super.paintComponent(g)
-
-            environment.update()
-            g.drawImage(environment, 0, 0, null)
-          }
-
-          listenTo(mouse.clicks)
-
-          var down: Point = null
-          reactions += {
-            case e: MousePressed => {
-              e.peer.getButton match {
-                case 1 => down = e.point
-                case 3 => environment.lightSources.append(LightSource(Array(new PointLight(e.point.x, e.point.y, 100))))
-                case _ =>
-              }
+            override protected def paintComponent(g: Graphics2D): Unit = {
+                super.paintComponent(g)
+                g.clearRect(0, 0, this.bounds.getWidth.toInt, this.bounds.getHeight.toInt)
+                environment.update()
+                g.drawImage(environment, 0, 0, null)
             }
-            case e: MouseReleased =>  e.peer.getButton match {
-              case 1 => environment.boxes.append(Box(down.x, down.y, abs(e.point.x - down.x), abs(e.point.y - down.y), Material(0, 100, Color(123, 123, 123))))
-              case _ =>
+
+            listenTo(mouse.clicks)
+
+            var down: Point = null
+            reactions += {
+                case e: MousePressed => {
+                    e.peer.getButton match {
+                        case 1 => down = e.point
+                        case 3 => environment.lightSources.append(new LightSource(e.point.x, e.point.y))
+                        case _ =>
+                    }
+                }
+                case e: MouseReleased => e.peer.getButton match {
+                    case 1 => environment.boxes.append(Box(down.x - abs((e.point.x - down.x) / 2) + (e.point.x - down.x) / 2, down.y - abs((e.point.y - down.y) / 2) + (e.point.y - down.y) / 2, abs(e.point.x - down.x), abs(e.point.y - down.y), Material(0, 100, Color(123, 123, 123))))
+                    case _ =>
+                }
             }
-          }
         }
 
         contents = panel

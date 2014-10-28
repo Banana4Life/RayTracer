@@ -9,7 +9,8 @@ case class Box(a: Int, b: Int, c: Int, d: Int, material: Material) extends Recta
         g.fillRect(getX, getY, getWidth, getHeight)
     }
 
-    def getVertices:Array[Point] = getVertices(this)
+    def getVertices: Array[Point] = getVertices(this)
+
     def getVertices(rect: Rectangle) = {
         val result = Array(new Point(rect.getLocation), new Point(rect.getLocation), new Point(rect.getLocation), new Point(rect.getLocation))
         result(1).translate(rect.getWidth, 0)
