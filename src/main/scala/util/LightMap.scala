@@ -46,7 +46,7 @@ object LightMap {
         activeEdgeList ::= getActiveEdge(new Ray(shadow._3.getAnchor2, getBorderIntersection(shadow._3)(width, height)))
         // Edge at x = 0
         if (getBorderIntersection(shadow._1)(width, height).x == 0 || getBorderIntersection(shadow._3)(width, height).x == 0) activeEdgeList ::= getActiveEdge(new Ray(new Point(0, getBorderIntersection(shadow._1)(width, height).y), new Point(0, getBorderIntersection(shadow._3)(width, height).y)))
-        if (getBorderIntersection(shadow._1)(width, height).x > 0 && getBorderIntersection(shadow._3)(width, height).x > 0 && getBorderIntersection(shadow._1)(width, height).x < shadow._1.getAnchor1.x) activeEdgeList ::= getActiveEdge(new Ray(new Point(0, 0), new Point(0, height)))
+        if (getBorderIntersection(shadow._1)(width, height).x > 0 && getBorderIntersection(shadow._3)(width, height).x > 0 && getBorderIntersection(shadow._1)(width, height).x < shadow._1.getAnchor1.x && getBorderIntersection(shadow._3)(width, height).x < shadow._3.getAnchor1.x) activeEdgeList ::= getActiveEdge(new Ray(new Point(0, 0), new Point(0, height)))
         rasterize(activeEdgeList)(lightMap, lightCount)(width, height)
     }
 

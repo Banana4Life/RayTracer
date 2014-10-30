@@ -25,7 +25,7 @@ object RayTracer extends SimpleSwingApplication {
 
 
         var lights = ArrayBuffer(
-            new LightSource(Array(new PointLight(250, 150)))
+            new LightSource(350, 250)
         )
         var boxes = ArrayBuffer(
             Box(200, 200, 100, 100, Material(0, 100, Color(255, 0, 0)))

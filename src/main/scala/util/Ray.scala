@@ -7,7 +7,11 @@ class Ray(anchor1: Point, anchor2: Point) {
 
     def direction = anchor2 - anchor1
 
-    def angleTo(ray: Ray) = math.acos(this.direction * ray.direction / (this.direction.length * ray.direction.length))
+    def angleTo(ray: Ray): Double = {
+        math.acos(limit(this.direction * ray.direction / (this.direction.length * ray.direction.length), -1, 1))
+    }
+
+    def limit(x: Double, min: Double, max: Double) = if (x < min) min else if (x > max) max else x
 
     def getFor(k: Double) = getAnchor1 + (direction * k)
 
