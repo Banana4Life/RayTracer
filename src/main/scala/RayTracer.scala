@@ -54,8 +54,8 @@ object RayTracer extends SimpleSwingApplication {
             reactions += {
                 case e: MousePressed => {
                     val p = e.point
+                    down = p
                     e.peer.getButton match {
-                        case 1 => down = e.point
                         case 3 if canPlaceLightAt(p.x, p.y) => {
                           environment.lightSources.append(new LightSource(p.x, p.y))
                           repaint()
