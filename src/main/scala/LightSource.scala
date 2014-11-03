@@ -19,7 +19,7 @@ case class LightSource(pointLights: Array[PointLight]) {
     }
 
     def render(g: Graphics) {
-        g.setColor(Color.YELLOW)
+        g.setColor(new Color(255, 100, 0))
         g.fillOval(pointLights(0).x - 3, pointLights(0).y - 3, 6, 6)
     }
 

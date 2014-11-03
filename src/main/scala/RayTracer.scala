@@ -24,12 +24,8 @@ object RayTracer extends SimpleSwingApplication {
         resizable = false
 
 
-        var lights = ArrayBuffer(
-            new LightSource(350, 250)
-        )
-        var boxes = ArrayBuffer(
-            Box(200, 200, 100, 100, Material(0, 100, Color(255, 0, 0)))
-        )
+        var lights: ArrayBuffer[LightSource] = ArrayBuffer()
+        var boxes: ArrayBuffer[Box] = ArrayBuffer()
 
         var environment = new Environment(preferredSize, lights, boxes)
 
@@ -65,7 +61,7 @@ object RayTracer extends SimpleSwingApplication {
                 }
                 case e: MouseReleased => {
                   val p = e.point
-                  val b = Box(down.x - abs((p.x - down.x) / 2) + (p.x - down.x) / 2, down.y - abs((p.y - down.y) / 2) + (p.y - down.y) / 2, abs(p.x - down.x), abs(p.y - down.y), Material(0, 100, Color(255, 0, 0)))
+                  val b = Box(down.x - abs((p.x - down.x) / 2) + (p.x - down.x) / 2, down.y - abs((p.y - down.y) / 2) + (p.y - down.y) / 2, abs(p.x - down.x), abs(p.y - down.y), Material(0, 100, Color(0, 255, 0)))
                   e.peer.getButton match {
                     case 1 if canPlaceBoxAt(b) => {
                       environment.boxes.append(b)
