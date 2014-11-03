@@ -10,9 +10,5 @@ project/boot/
 .history
 .cache
 .idea
-*.bbl
-*.blg
-*.synctex.gz
-*.pdf
-*.log
-*.aux
+/paper/*.*
+!/paper/*.tex

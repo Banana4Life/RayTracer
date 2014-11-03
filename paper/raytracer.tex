@@ -45,7 +45,7 @@
 \usepackage{lastpage}
 \usepackage{fancyhdr}
 \fancyhf{} % leere alle Felder
-\fancyhead[R]{\footnotesize Phillip Schichtel: phillip@schich.tel \\ Jonas Dann: jonas.chr.dann@gmail.com}
+\fancyhead[R]{\footnotesize Phillip Schichtel: phillip.dhbw@schich.tel \\ Jonas Dann: jonas.chr.dann@gmail.com}
 \fancyhead[L]{\footnotesize Ausgewählte Methoden der
 Datenanalyse, \\ Modellierung und Simulation - Raytracing} % Titel des Aufsatzes
 \fancyfoot[C]{\footnotesize \thepage/\pageref{LastPage}}
@@ -54,15 +54,28 @@ Datenanalyse, \\ Modellierung und Simulation - Raytracing} % Titel des Aufsatzes
 \pagestyle{fancy}
 %###########################################################
 
+\title{Raytracing - Schattenberechnung im zweidimensionalen Raum}
+
 \newcommand{\ownsection}[1]{\begin{center}\LARGE\bf#1\end{center}}
 
 \begin{document}
+
+
+{
+  \onecolumn
+  \maketitle
+}
+
+{
+  \onecolumn
+  \tableofcontents
+}
 
 \twocolumn[
 \ownsection{Raytracing - Schattenberechnung im zweidimensionalen Raum}
 
 \begin{center}
-Phillip Schichtel (phillip@schich.tel) \\
+Phillip Schichtel (phillip.dhbw@schich.tel) \\
 Jonas Dann (jonas.chr.dann@gmail.com) \\
 Mannheim, Oktober 2014
 \end{center}
@@ -70,7 +83,7 @@ Mannheim, Oktober 2014
 ]
 
 % \begin{multicols}{2}
-\section*{Abstract}
+\section{Abstract}
 Im Folgenden wird der gewogene Leser Ideen und 
 Anregungen über das Schreiben und Lesen von Artikeln aus den 
 Naturwissenschaften erfahren, welche ausschließlich aus den 
@@ -90,7 +103,7 @@ Im Abstract finden sich nie Bilder, Tabellen,
 Verweise auf solche und sehr selten Referenzen auf andere
 Artikel oder Veröffentlichungen. 
 
-\section*{Einleitung}
+\section{Motivation}
 
 Hier können Sie den Leser auf eine kleine Exkursion
 vom Großen ins Kleine bis hin zu Ihrer Problemstellung mitnehmen.
@@ -111,9 +124,35 @@ ist, dann erhält man in der Einleitung einen schnellen Überblick.
 Meistens finden sich die wichtigsten und aktuellsten 
 Fakten und Veröffentlichungen des Forschungsgebietes in der Einleitung.
 
-\section*{Material und Methoden}
+\subsection{Anwendung in Spielen}
 
-\subsection*{Bedeutung der Abschnitte}
+text hier 
+
+\subsection{Anwendung im Design}
+
+noch mehr text hier
+
+\subsection{Anwendung in Benutzeroberflächen}
+
+.... noch mehr
+
+\section{Problemstellung und Methoden}
+
+\subsection{Umbra, Penumbra und Antumbra}
+
+Schatten und so....
+
+\subsection{Shadow Mapping}
+
+Schatten abbilden
+
+\subsection{Raytracing}
+
+Strahlen verfolgen
+
+\subsection{Shadow Volumes}
+
+Schatten zum Würfel
 
 In naturwissenschaftlichen Veröffentlichungen sollte immer 
 ein 'Abstract', eine 'Einleitung' und soetwas wie 'Ergebnisse und
@@ -205,7 +244,7 @@ Natürlich ist das eben Geschriebene nur eine Ideenskizze und wenn
 Sie eine andere Herangehensweise an das Lesen solcher Artikel haben,
 so steht dies Ihnen selbstverständlich frei.
 
-\section*{Durchführung}
+\section{Durchführung}
 
 Hier ein paar Regeln zum Schreiben eines Artikels, 
 gegen die ich teilweise in dieser Ausarbeitung bereits
@@ -282,7 +321,7 @@ nicht näher zu bezeichnenden Einheiten (a.u. für arbitrary unit) angegeben sin
 \label{fig:audio}
 \end{figure}
 
-\section*{Ergebnisse und Diskussion}
+\section{Ergebnisse und Diskussion}
 
 Was Sie hier finden sollten, findet sich leider schon in den vorangegangenen
 Textpassagen und Abschnitten und ich mag Sie nicht mit Wiederholungen
@@ -333,16 +372,24 @@ Schreibens gerne nutzte: {\it Was sich überhaupt sagen lässt, lässt
 sich klar sagen; und wovon man nicht reden kann, darüber muss man
 schweigen.} 
 
-\section*{Danksagung}
+\section{Diskussion}
 
 Wenn es jemanden zu danken gibt, wie beispielsweise die Geldgeber, 
-dann ist hier der Ort. 
+dann ist hier der Ort.
+
+\subsection{Die Grenzen des gewählten Ansatz}
 
 Ich für meinen Teil möchte den Dank an Prof. Dr. Tobias Straub
 richten, für das Angebot eine Vorlesung an der Dualen Hochschule in
 Mannheim halten zu dürfen. Auch einen Dank an all die Studenten der Vorlesung
+
+\subsection{Alternative Ansätze}
+
 und besonders für die spannenden Projekte, bei den ich teils auch 
 etwas hinzulernen durfte. Am Ende nochmals vielen Dank 
+
+\subsection{Abdeckung der Problematik}
+
 an den bereits erwähnten Prof. Dr. Kurt Roth für alles, 
 was ich während meiner Doktorarbeit durch ihn gelernt habe.
 
