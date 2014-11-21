@@ -1,76 +1,80 @@
 \section{Durchführung}
 
-Hier ein paar Regeln zum Schreiben eines Artikels, 
-gegen die ich teilweise in dieser Ausarbeitung bereits
-verstoßen habe.
-\begin{list}{-}{}
-\item[(a)] Schreiben Sie nicht in 'Ich'-Form! Versuchen Sie entweder 
-unpersönlich zu bleiben oder ggf. im Namen des Forschungsteams mit 'wir' zu arbeiten.
+Das verwendete Verfahren spiegelt ein Shadow Volumes artiges Verfahren im zweidimensionalen Raum wieder. Auch hier wird die Silhouette des angestrahlten Rechtecks berechnet und and die Grenzen, des Fensters auf dem Bildschirm, projiziert. Der von dieser Projektion abgedeckte Bereich wird dunkler eingefärbt.
 
-\item[(b)] Sprechen Sie den Leser nicht an! Der Leser soll sich selber ein
-objektives Bild über den Artikel machen. Ich hoffe Sie verstehen das, oder?
+Der Rasterizer, welche die Schattenfläche auf die Lichtwerte der Pixel in dem Fenster anwendet, benötigt zwei Strahlen, welche die Projektion der Silhouette darstellen, und ein Array von Punkten welche alle Eckpunkte des Rechtecks, welche auf der dunklen Seite des Objektes liegen, enthält. Diese werden benötigt, damit der Schatten das Rechteck nicht teilweise bis ganz überdeckt. Somit kann man die Objekte in der Szene besser voneinander unterscheiden und sieht nicht ausschließlich schwarze Flächen.
 
-\item[(c)] Bilder, Diagramme und Tabellen stehen alleine. Im Text findet man
-nur die Referenzen darauf, wie Sie dies mit Bezug auf
-Abb.~\ref{fig:audio} ersehen.
+Es wird vor jeder Berechnung der Schatten von einem vollkommen beleuchteten Raum ausgegangen. Dazu wird für jeden Pixel auf dem Bildschirm der Wert 1, von allen Lichtquellen beleuchtet, gespeichert.
 
-\item[(d)] Bilder, Diagramme und Tabellen sind nie vor der Seite der entsprechenden 
-Referenz im Text zu finden. Meistens findet man sie gesammelt im oberen
-Seitenbereich, der entsprechenden oder der nahen Folgeseiten. Die Positionierung
-im oberen Bereich der Seite hilft den Schnelldurchblätterer, dass seine 
-Augen nicht so viel springen müssen.
+%\begin{figure}[t]
+%	\centering
+%	\includegraphics[width=\columnwidth]{images/durchfuehrung.png}
+%	\caption{einfacher Schatten}
+%	\label{fig:durch1}
+%\end{figure}
 
-\item[(e)] Gleichungen und Formeln wie beispielsweise das Faltungsintegral
+Im Folgenden wird die entwickelte Methode gezeigt um einen Schatten zu berechnen, wie er zum Beispiel in Abbildung \ref{fig:durch1} zu sehen ist.
+
+%\begin{figure}[t]
+%	\centering
+%	\includegraphics[width=\columnwidth]{images/durchfuehrung_1.png}
+%	\caption{Geraden durch Eckpunkte}
+%	\label{fig:durch2}
+%\end{figure}
+
+Im ersten Schritt der Berechnung werden durch jeden Eckpunkt
 \begin{equation}
-g(t) = \int_{-\infty}^{+\infty}\!\!d\tau \; h(\tau) \, f(t-\tau)
-\label{eq:faltung}
+	P = \left(\begin{array}{c} p_1 \\ p_2 \end{array}\right)
 \end{equation}
-stehen niemals isoliert und sollen sich harmonisch in die Satzstruktur einfügen.
-Es empfiehlt sich bei neuen Variablen gleich unter der Gleichung, diese
-zu benennen bzw. zu erklären, damit der Leser nicht lange suchen muss.
-
-\item[(f)] Bezieht man sich auf eine Formel, weil man beispielsweise findet,
-dass die Integralschreibweise für die Korrelationsanalyse 
+des schattenwerfenden Objektes und die Lichtquelle
 \begin{equation}
-g(t) = \int_{-\infty}^{+\infty}\!\!d\tau \; h(\tau) \, f(t + \tau)
+	L = \left(\begin{array}{c} l_1 \\ l_2 \end{array}\right)
 \end{equation}
-dem Faltungsintegral aus Gl.~\eqref{eq:faltung} sehr ähnlich sieht,
-so sollte man anhand der hier getätigten Referenz die Umsetzung ersehen.
+Geraden
+\begin{equation}
+	\vec{g} = \left(\begin{array}{c} p_1 \\ p_2 \end{array}\right) + r * \left(\begin{array}{c} p_1 - l_1 \\ p_2 - l_2 \end{array}\right)
+\end{equation}
+gelegt (Abbildung \ref{fig:durch2}).
 
-\item[(g)] Zitieren Sie jemanden oder beziehen Sie sich nur auf eine
-Veröffentlichung wie beispielsweise auf ein interessantes Experiment 
-zur Totalreflektion \cite{Goos1947}, so können Sie dies beispielsweise 
-durch Nummern tun, die im Literaturverzeichnis ausgeführt sind.
-Andernorts findet man auch gern den Nachnamen des Erstautors und
-das Erscheinungsjahr als Schlüssel, um den Eintrag im Literaturverzeichnis
-zu finden. 
+%\begin{figure}[t]
+%	\centering
+%	\includegraphics[width=\columnwidth]{images/durchfuehrung_4.png}
+%	\caption{Geraden mit größtem Winkel}
+%	\label{fig:durch3}
+%\end{figure}
 
-Übrigens findet man in naturwissenschaftlichen Schriften 
-äußerst selten wörtliche Zitate und meist Referenzen, oder wollten Sie
-aus der Arbeit von Einstein zur Speziellen Relativitätstheorie \cite{Einstein1905}
-wörtlich zitieren?
+%\vec{e}_1=\left(\begin{array}{c} 1 \\ 0 \end{array}\right)
 
-\item[(h)] Das Literaturverzeichnis sollte ausreichend Informationen enthalten,
-um die Veröffentlichungen auch zu finden. Ebenso muß es einheitlich für
-die einzelnen Veröffentlichungstypen wie Buch, Artikel, Webseite etc. sein,
-denn nur die Wenigsten mögen es, sich durch scheinbares Chaos fremder Leute zu wühlen.
+Ausschlaggebend für den geworfenen Schatten sind die zwei Geraden, deren Winkel am weitesten auseinander liegt (Abbildung \ref{fig:durch3}). Dazu wird rekursiv jedes Geradenpaar
 
-\item[(i)] Argumentieren Sie! Entschuldigen Sie sich nicht für Ihre Arbeit, 
-aber argumentieren und diskutieren Sie die Dinge, die merkwürdig sind.
-Führen Sie weitestgehend objektive Gründe an, wenn etwas nicht funktionierte.
-Argumentationen, Begründungen etc. müssen meist nicht lang sein, 
-aber über offensichtliche Wiedersprüche zu schweigen wirkt unprofessionell 
-und der verärgerte Leser wird vielleicht noch unliebsamere Worte 
-zum Lästern finden.
+\begin{equation}
+	\vec{g}_1 = \vec{o}_1 + r * \vec{m}_1, \vec{g}_2 = \vec{o}_2 + s * \vec{m}_1
+\end{equation}
+durch den Winkel
+\begin{equation}
+	\omega = arccos(\vec{m}_1 * \vec{m}_2 / (|\vec{m}_1| * |\vec{m}_2|))
+\end{equation}
 
-\item[(j)] Vermeiden Sie Füllwörter! Obwohl man aber vielleicht auch behaupten
-könnte, dass dann auch ein wenig mehr Text gefüllt wird.
-\end{list}
+mit dem vorherig größten Geradenpaar verglichen und das mit dem größeren Winkel zurückgegeben.
 
-\begin{figure}[t]
-\centering
-%\includegraphics[width=0.45\textwidth]{Bilder/audio-signal-short.pdf}
-\caption{Das akustische Signal von etwas Gestammelten, wobei die Amplituden in 
-nicht näher zu bezeichnenden Einheiten (a.u. für arbitrary unit) angegeben sind.}
-\label{fig:audio}
-\end{figure}
+%\begin{figure}[t]
+%	\centering
+%	\includegraphics[width=\columnwidth]{images/durchfuehrung_2.png}
+%	\caption{Gerade durch Ortsvektoren}
+%	\label{fig:durch4}
+%\end{figure}
+
+Damit später die Objekte nicht vom eigenen Schatten teilweise bis ganz überdeckt werden, werden nun die Eckpunkte des Rechtecks berechnet, welche auf der dunklen Seite des Objektes liegen. Dazu wird eine Gerade durch die Ortsvektoren der zwei vorher bestimmten Geraden bestimmt (Abbildung \ref{fig:durch4}).
+
+\begin{equation}
+	s: \vec{s} = \vec{o}_1 + t * \left(\begin{array}{c} o_21 - o_11 \\ o_22 - o_12 \end{array}\right)
+\end{equation}
+
+%\begin{figure}[t]
+%	\centering
+%	\includegraphics[width=\columnwidth]{images/durchfuehrung_3.png}
+%	\caption{Eckpunkte auf der dunklen Seite}
+%	\label{fig:durch5}
+%\end{figure}
+
+Wenn ein Schnittpunkt zwischen der Geraden $s$ und der Strecke zwischen einem Eckpunkt des Rechtecks und der Position der Lichtquelle vorhanden ist hängen wir diesen Eckpunkt an das an den Rasterizer zu übergebende Array an (Abbildung \ref{fig:durch5}).
