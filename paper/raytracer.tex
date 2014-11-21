@@ -85,49 +85,54 @@ Mannheim, Oktober 2014
 
 % \begin{multicols}{2}
 \section{Abstract}
+
+Im Folgenden werden verschiedene Methoden zur Simulation von realistischen Schatten
+vorgestellt und diskutiert. Dabei werden die Verfahren ``Shadow Mapping'',
+``Ray tracing'' und ``Shadow Volumes'' theoretisch und die Implementierung
+einer Abwandlung des ``Shadow Volumes''-Verfahrens praktisch gezeigt.
+
+
+\section{Einleitung \& Motivation}
+
 Schatten gibt es überall, wo es Licht gibt. Dies gibt es zu bedenken, wenn
-Gebäude oder außernbereiche geplant werden.
-Desweiteren geben Schatten flachen Objekten tiefe für das menschlische Auge.
+Gebäude oder außenbereiche geplant werden.
+Desweiteren verleihen Schatten flachen Objekten eine gewisse Tiefe für das menschlische Auge.
 Dies wird genutzt um in Filmen digital eingefügte Objekte realistisch aussehen zu lassen.
-Im folgenden werden verschiedene Verfahren behandelt, die genutzt werden um realistische
-Schatten so wohl für statische Szenen als auch für dynamische real-time Simulationen zu
-berechnen.
 
-\section{Motivation}
+Aber auch in Spielen werden Schatten auf die verschiedensten Weisen verwendet, dort werden
+die Schatten meistens auch in Echtzeit berechnet da sich die Spielwelten in den meisten Spielen
+ständig ändern.
 
-Architekten nutzen Licht- und Schattensimulationen um Räume zu planen,
-Game-Designer nutzen Licht- und Schatten um Flachen grafiken auf dem 
-
-Hier können Sie den Leser auf eine kleine Exkursion
-vom Großen ins Kleine bis hin zu Ihrer Problemstellung mitnehmen.
-Die großen Fragen, wie 'Woher kommen wir?', 'Was machen wir?' 
-oder 'Und warum ist es so spannend sich mit dem zu 
-beschäftigen, was Sie im folgenden lesen werden?' können Sie
-hier behandeln.
-
-Am Ende kann ein wenig zur Gliederung gesagt werden,
-damit sich der Leser ein Bild vom Ganzen machen kann.
-
-Achja, wenn man in einem Forschungsfeld unterwegs ist, dann
-werden Sie womöglich ähnliche Einleitungen in verschiedenen
-Artikeln finden. Böse gesagt, kennst Du eine 
-Einleitung, kennst Du fast alle, was natürlich nicht
-ganz wahr ist. Wenn man aber neu in einem Gebiet
-ist, dann erhält man in der Einleitung einen schnellen Überblick.
-Meistens finden sich die wichtigsten und aktuellsten 
-Fakten und Veröffentlichungen des Forschungsgebietes in der Einleitung.
+Architekten nutzen Licht- und Schattensimulationen um Räume zu planen, bei denen eine passende
+Ausleuchtung essentiell ist.
 
 \subsection{Anwendung in Spielen}
 
-text hier 
+In Spielen trifft man auf viele verschiedene Anwendungen von Licht und Schatten. In den meisten
+Spielen werden die Schatten genutzt, um die Spielwelt realistischer und glaubwürdiger darzustellen.
+Dabei treten häufig viele verschiedene Lichtquellen in einer Szene auf, was für die Berechnung der
+Schatten sehr effiziente Algorithmen benötigt, denn eine Szene (ein Bild) muss für eine Bildrate
+von 60 $\frac{\text{Bilder}}{\text{Sekunde}}$ in unter 16 Millisekunden fertig von der Grafikkarte gezeichnet sein.
 
-\subsection{Anwendung im Design}
+Zum Zeitpunkt der Veröffentlichung dieser Arbeit ist es üblich, grobe Annäherungen zu verwenden,
+wie sie etwa durch das ``Shadow Mapping''-Verfahren berechnet werden.
 
-noch mehr text hier
+Andere Spiele verwenden ähnliche Berechnungen auch für Spielelemente. So wird in dem Spiel ``Monaco'' \cite{monaco2014},
+ein 2D Spiel in der Vogelperspektive, der Spieler als gerichtete Lichtquelle betrachtet um verdeckte
+Elemente, also Elemente im Schatten des Blicks, auszublenden.
 
-\subsection{Anwendung in Benutzeroberflächen}
+\subsection{Anwendung in der Architekur}
 
-.... noch mehr
+Architekten simulieren bei neu entworfenen Gebäuden auch den Lichteinfall zu verschiedenen Tageszeiten.
+Das ist besonders dann wichtig, wenn Kunden gut ausgeleuchtete Räume wollen oder auch wenn es darum geht
+Sitzmöglichkeiten auf Plätzen zu planen. In ersterem will man die Schatten durch geschickte Platzierung
+von Fenstern und Lampen minimieren, bei letzterem will man den Schatten zu bestimmten Tageszeiten
+möglichst lange halten.
+
+\subsection{Anwendung in Filmen}
+
+Viele Szenen in modernen Filmen werden heutzutage vollständig am Computer generiert. Damit diese Szenen
+real aussehen, müssen auch hier wie bei den Spielen akurate Schatten berechnet werden.
 
 \section{Problemstellung und Methoden}
 
@@ -146,8 +151,9 @@ In der Theorie von Schatten wird ein Schatten in 4 Teile zerlegen.
        Welt als immer. In diesem Bereich beginnt man die Seite der Lichtquelle zu sehen, die vorher im
        Umbra verdeckt wurde.
 \end{enumerate}
-
 Diese 3 separaten Bereiche eines Schatten sollten optisch realistisch dargestellt werden können.
+Damit gilt also als Anforderung, dass Lichtquellen simuliert werden können, die eine Breite haben
+und nicht nur einfach ein Punkt sind.
 
 
 \subsection{Shadow Mapping}
@@ -254,41 +260,6 @@ so steht dies Ihnen selbstverständlich frei.
 
 \section{Durchführung}
 
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=\columnwidth]{images/durchfuehrung.png}
-	\caption{Durchführung 1}
-	\label{durch1}
-\end{figure}
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=\columnwidth]{images/durchfuehrung_1.png}
-	\caption{Durchführung 2}
-	\label{durch2}
-\end{figure}
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=\columnwidth]{images/durchfuehrung_2.png}
-	\caption{Durchführung 3}
-	\label{durch3}
-\end{figure}
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=\columnwidth]{images/durchfuehrung_3.png}
-	\caption{Durchführung 4}
-	\label{durch4}
-\end{figure}
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=\columnwidth]{images/durchfuehrung_4.png}
-	\caption{Durchführung 5}
-	\label{durch5}
-\end{figure}
-
 Hier ein paar Regeln zum Schreiben eines Artikels, 
 gegen die ich teilweise in dieser Ausarbeitung bereits
 verstoßen habe.
@@ -366,34 +337,6 @@ nicht näher zu bezeichnenden Einheiten (a.u. für arbitrary unit) angegeben sin
 
 \section{Ergebnisse und Diskussion}
 
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=\columnwidth]{images/ergebnis_4.png}
-	\caption{Ergebnis 1}
-	\label{ergeb1}
-\end{figure}
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=\columnwidth]{images/ergebnis.png}
-	\caption{Ergebnis 2}
-	\label{ergeb2}
-\end{figure}
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=\columnwidth]{images/ergebnis_2.png}
-	\caption{Ergebnis 3}
-	\label{ergeb3}
-\end{figure}
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=\columnwidth]{images/ergebnis_3.png}
-	\caption{Ergebnis 4}
-	\label{ergeb4}
-\end{figure}
-
 Was Sie hier finden sollten, findet sich leider schon in den vorangegangenen
 Textpassagen und Abschnitten und ich mag Sie nicht mit Wiederholungen
 langweilen. Jedoch kann man ab und zu feststellen, dass das Abstract und
@@ -465,6 +408,7 @@ an den bereits erwähnten Prof. Dr. Kurt Roth für alles,
 was ich während meiner Doktorarbeit durch ihn gelernt habe.
 
 \begin{thebibliography}{99}
+\bibitem{monaco2014}http://www.monacoismine.com/
 \bibitem{Goos1947}F.Goos und H.Hänchen: {\it Ein neuer fundamentaler Versuch zur Totalreflektion}, 1947; Annalen der Physik 436, S. 333-346
 \bibitem{Einstein1905}A.Einstein {\it Zur Elektrodynamik bewegter Körper}, 1905; Annalen der Physik und Chemie 17, S. 891-921
 \bibitem{Gerhards2008}H.Gerhards: {\it Ground Penetrating Radar as a Quantative Tool with Applications in Soil Hydrology}, Heidelberg 2008; Dissertaton,
