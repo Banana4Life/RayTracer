@@ -1,7 +1,9 @@
 \section{Problemstellung und Methoden}
 
-Das Problem ist, im zweidimensionalen Raum realistische Schatten zu berechnen möglichst die, wie echte
-Schatten aus den drei Teilen "`Umbra"', "`Penumbra"' und "`Antumbra"'
+Das Problem ist, im zweidimensionalen Raum realistische Schatten zu berechnen, die wie echte
+Schatten aus den drei Teilen "`Umbra"', "`Penumbra"' und "`Antumbra"'.
+Also keine harten Schatten wie bei einem Punktlicht, sondern weiche Schatten und auch
+Überlagerungen von Schatten.
 
 \subsection{Umbra, Penumbra und Antumbra}
 
@@ -10,24 +12,47 @@ In der Theorie von Schatten wird ein Schatten in 4 Teile zerlegen.
  \item \emph{Umbra}, der Kernschatten, ist der Teil des Schattens der von keinerlei Licht erreicht wird.
        Wenn es nur eine Lichtquelle gibt, dann hat jeder Schatten einen Umbra.
  \item \emph{Antumbra}, der weiche Schatten, der hinter dem Umbra entsteht. Dieser Bereich entsteht nur,
-       wenn die Lichtquelle größer ist, als das Objekt, dass den Schatten wirft. Der Antumbra beginnt an
+       wenn die Lichtquelle größer ist, als das Objekt, das den Schatten wirft. Der Antumbra beginnt an
        dem Punkt, an dem das Objekt die Lichtquelle nicht mehr vollständig verdecken kann und man die
        Ränder der Lichtquelle sehen kann.
  \item \emph{Penumbra}, die zwei weichen Schatten, die an den Seiten des Umbras entstehen. Diesen Bereich
        gibt es immer, wenn der Schatten nicht von einer Punktlichtquelle geworfen wird, in der realen
-       Welt als immer. In diesem Bereich beginnt man die Seite der Lichtquelle zu sehen, die vorher im
+       Welt also immer. In diesem Bereich beginnt man die Seite der Lichtquelle zu sehen, die vorher im
        Umbra verdeckt wurde.
 \end{enumerate}
 Diese 3 separaten Bereiche eines Schatten sollten optisch realistisch dargestellt werden können.
 Damit gilt also als Anforderung, dass Lichtquellen simuliert werden können, die eine Breite haben
-und nicht nur einfach ein Punkt sind.
+und nicht einfach nur ein Punkt sind.
 
 
 \subsection{Shadow Mapping}
 
-Schatten abbilden
+Das "`Shadow Mapping"'-Verfahren, auch "`Projective shadowing"' genannt, berechnet eine sehr einfache,
+aber dafür auch effiziente Annäherung für Schatten. das Verfahren kann vollständig auf dem
+Grafikprozessor ausgeführt werden, was nochmals zu einer Beschleunigung führt. Das Verfahren berechnet
+die Szene in mehreren Schritten:
 
-\subsection{Raytracing}
+\begin{enumerate}
+ \item Als erstes wird die Szene von der Sicht des Lichts aus berechnet. Dabei wird für Punktlichter
+       eine perspektivische Projektion verwendet, während für das Umgebungslicht (Sonnenlicht) eine
+       orthografische Projektion verwendet wird.
+
+       Beim berechnen der Szene in diesem Schritt werden Farben und Texturen in der Szene ignoriert,
+       denn es wird nur die tiefe der Pixel benötigt um die Schatten, die in dem "`Depth Buffer"'
+       (Zwischenspeicher, der Tiefeninformationen zu Pixeln hält) auf der Grafikkarte abgelegt wird.
+       Für jede Lichtquelle wird dabei ein eigener Depth Buffer berechnet.
+ \item Im zweiten Schritt werden die Depth Buffer auf die finale Sicht aus der ursprünglichen Kamera
+       projiziert. Diese projizierten Tiefeninformationen werden dann genutzt um zu prüfen, ob ein
+       Pixel im Schatten liegt oder nicht.
+ \item Im letzten Schritt wird die Szene mit der ursprünglichen Kamera berechnet. Dabei wird für
+       jeden Pixel geprüft ob er in einem Schatten liegt anhand der vorher berechneten Depth Buffer.
+\end{enumerate}
+
+\subsection*{Grenzen}
+
+Die Schatten, die mit diesem Verfahren berechnet
+
+\subsection{Ray tracing}
 
 Strahlen verfolgen
 
