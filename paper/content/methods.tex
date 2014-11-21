@@ -28,9 +28,9 @@ und nicht einfach nur ein Punkt sind.
 \subsection{Shadow Mapping}
 
 Das "`Shadow Mapping"'-Verfahren, auch "`Projective shadowing"' genannt, berechnet eine sehr einfache,
-aber dafür auch effiziente Annäherung für Schatten. das Verfahren kann vollständig auf dem
-Grafikprozessor ausgeführt werden, was nochmals zu einer Beschleunigung führt. Das Verfahren berechnet
-die Szene in mehreren Schritten:
+aber dafür auch effiziente Annäherung für Schatten. Das Verfahren kann vollständig auf dem
+Grafikprozessor ausgeführt werden, was nochmals zu einer Beschleunigung führt. Die Berechnung der
+Szene wird dabei grob in die folgenden Schritte unterteilt:
 
 \begin{enumerate}
  \item Als erstes wird die Szene von der Sicht des Lichts aus berechnet. Dabei wird für Punktlichter
@@ -44,17 +44,33 @@ die Szene in mehreren Schritten:
  \item Im zweiten Schritt werden die Depth Buffer auf die finale Sicht aus der ursprünglichen Kamera
        projiziert. Diese projizierten Tiefeninformationen werden dann genutzt um zu prüfen, ob ein
        Pixel im Schatten liegt oder nicht.
- \item Im letzten Schritt wird die Szene mit der ursprünglichen Kamera berechnet. Dabei wird für
-       jeden Pixel geprüft ob er in einem Schatten liegt anhand der vorher berechneten Depth Buffer.
+ \item Im letzten Schritt wird die Szene mit der ursprünglichen Kamera berechnet. Dabei wird anhand
+       der vorher berechneten Depth Buffer für jeden Pixel geprüft, ob er in einem Schatten liegt.
 \end{enumerate}
 
 \subsection*{Grenzen}
 
-Die Schatten, die mit diesem Verfahren berechnet
+Die Schatten, die mit diesem Verfahren berechnet werden, sind in der einfachsten Form harte Schatten,
+die je nach Auflösung/Größe des Depth Buffer auch sehr kantig sein können (Alias-Effekt). Eine
+einfache Lösung für dieses Problem ist das Weichzeichnen der Schattenkanten.
 
 \subsection{Ray tracing}
 
-Strahlen verfolgen
+Die Schattenberechnung durch Ray Tracing (Strahlenverfolgung) erlaubt extrem realistische Belichtungs-
+und Schattenberechnungen.
+Dabei sendet das Verfahren für jeden Pixel des Bildschirms einen Strahl von der Betrachterkamera aus.
+Diese Strahlen werden dann über Reflektionen hinweg nachverfolgt bis sie schlussendlich in einer
+Lichtquelle endet. Damit wird die exakte Belichtung berechnet, für die Schatten wird dann jeder
+Kollisionspunkt betrachtet. Dort wird geprüft, ob dieser Punkt direkt von einer Lichtquelle
+beschienen werden kann. Ist das nicht der Fall, dann liegt der Punkt im Schatten. Auch transparente
+Objekte können mit Ray Tracing realistisch belichtet und beschattet werden.
+
+\subsection*{Grenzen}
+
+Mit der hohen Präzision von Ray Tracing kommt auch die entsprechend hohe Komplexität, sowohl für die
+Implementierung als auch für die Laufzeit. Das Berechnen vergleichsweise einfacher Szenen kann mit
+aktivem Ray Tracing mehrere Minuten dauern, was es für Schattenberechnung in Echtzeitanwendungen
+unbrauchbar macht.
 
 \subsection{Shadow Volumes}
 
