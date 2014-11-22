@@ -9,7 +9,7 @@
 
 Das Ziel der Berechnung von Schatten ist die Darstellung möglichst real wirkender Beleuchtung. In
 der realen Welt werfen Lichter, wenn sie auf undurchsichtige Objekte treffen für gewöhnlich, keine
-harten Schatten, wie in Abbildung \ref{fig:ergeb4}.
+harten Schatten, wie in Abbildung \ref{fig:ergeb4}. Es werden Schatten geworfen, die je weiter sie vom schattenwerfenden Objekt entfernt sind weichere Kanten haben.
 
 \begin{figure}[t]
 	\centering
@@ -19,7 +19,7 @@ harten Schatten, wie in Abbildung \ref{fig:ergeb4}.
 \end{figure}
 
 Weichere Schatten, wie in Abbildung \ref{fig:ergeb3}, können durch das Darstellen einer Lichtquelle
-als Menge von leicht versetzten Lichtquellen erreicht werden.
+als Menge von leicht versetzten Lichtquellen erreicht werden. Nah am Objekt dran sind die einzelnen Schatten der Lichtquellen noch sehr ähnlich. Je weiter sie jedoch vom Objekt weg sind, desto weiter sind die Schatten verdeckt und der eben beschriebene Effekt der weichen Schattenkanten entsteht.
 
 \begin{figure}[t]
 	\centering
@@ -28,9 +28,7 @@ als Menge von leicht versetzten Lichtquellen erreicht werden.
 	\label{fig:ergeb2}
 \end{figure}
 
-Durch eine weitere Erhöhung der Zahl, der Lichtquellen, kann eine noch realistischere Annäherung
-vorgenommen werden. Umso mehr Lichtquellen bei der Annäherung verwendet werden, desto glatter ist
-der Verlauf zwischen Schatten und Licht.
+Durch eine weitere Erhöhung der Zahl an Lichtquellen kann eine noch bessere Annäherung von realen Schatten vorgenommen werden. Umso mehr Lichtquellen bei der Annäherung verwendet werden, desto glatter ist der Verlauf zwischen Schatten und Licht und desto weicher ist die Schattenkante (Abbildung \ref{fig:ergeb2}).
 
 \begin{figure}[t]
 	\centering
@@ -40,7 +38,7 @@ der Verlauf zwischen Schatten und Licht.
 \end{figure}
 
 Abbildung \ref{fig:ergeb1} zeigt eine Szene mit vielen Lichtquellen und schattenwerfenden Objekten.
-Zum einen wird hier ein weiteres Mal der an \ref{fig:ergeb2} gezeigte Effekt sichtbar. Schatten
+Hier wird ein weiteres Mal der an \ref{fig:ergeb2} gezeigte Effekt sichtbar. Schatten
 sind nah am Objekt noch sehr hart und werden mit wachsendem Abstand zum schattenwerfenden Objekt
 weicher. Weiterhin sieht man die Überlagerung von Schatten mehrerer Lichtquellen. Je nachdem wie
 viele Lichtquellen auf ein Pixel scheinen wird dieses mehr oder weniger hell eingefärbt. Durch die
