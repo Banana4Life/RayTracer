@@ -17,7 +17,7 @@ Dazu wird für jeden Pixel auf dem Bildschirm der Wert 1, äquivalent zu ``von a
 	\label{fig:durch1}
 \end{figure}
 
-Im Folgenden wird die entwickelte Methode gezeigt um einen Schatten zu berechnen, wie er zum
+Im Folgenden wird die entwickelte Methode gezeigt, um einen Schatten zu berechnen, wie er zum
 Beispiel in Abbildung \ref{fig:durch1} zu sehen ist. Um diesen Schatten darstellen zu können,
 werden nun zuerst die zwei Strahlen durch Eckpunkte des schattenwerfenden Objektes berechnet,
 die den größten Winkel zueinander haben.
@@ -96,25 +96,25 @@ Damit später die Objekte nicht vom eigenen Schatten teilweise bis ganz überdec
 \end{figure}
 
 Wenn ein Schnittpunkt zwischen der Geraden $s$ und der Strecke zwischen einem Eckpunkt des Rechtecks
-und der Position der Lichtquelle vorhanden ist hängen wir diesen Eckpunkt an das an den Rasterizer
+und der Position der Lichtquelle vorhanden ist, hängen wir diesen Eckpunkt an das an den Rasterizer
 zu übergebende Array von Punkten an (Abbildung \ref{fig:durch5}).
 
 Durch die Arbeitsweise des Rasterizers müssen die Schnittpunkte der zwei Silhouettenstrahlen mit den
 Fenstergrenzen nicht berechnet werden. Dieses Schattenmodell, bestehend aus zwei Strahlen und einem
-Array an Punkten, kann an den Rasterizer übergeben werden.
+Array an Punkten, kann an den Algorithmus übergeben werden.
 
-Der Rasterizer wendet dieses Konstrukt mit Hilfe des aktive Kantenlisten Algorithmus auf die
-Lichtwerte der Pixel in der Szene an. Der aktive Kantenlisten Algorithmus erlaubt eine inkrementelle
-Berechnung der Schnittpunkte zwischen Polygonkanten und Pixelzeilen und somit ob ein Pixel
+Der Rasterizer wendet dieses Konstrukt mit Hilfe des "`aktive Kantenlisten"'-Algorithmus auf die
+Lichtwerte der Pixel in der Szene an. Der Algorithmus erlaubt eine inkrementelle
+Berechnung der Schnittpunkte zwischen Polygonkanten und Pixelzeilen und somit, ob ein Pixel
 im Polygon liegt und eingefärbt wird oder nicht. Dazu wird eine Tabelle erzeugt, die für jede Pixelzeile eine Liste an aktiven Kanten
-enthält. Diese aktiven Kanten enthalten die x-Koordinate $x$ des Schnittpunktes mit der aktuellen Bildzeile, die
-Differenz zwischen den x-Koordinaten der Schnittpunkte $\Delta x$ zweier vertikal benachbarter
+enthält. Diese aktiven Kanten enthalten die $x$-Koordinate des Schnittpunktes mit der aktuellen Bildzeile, die
+Differenz zwischen den $x$-Koordinaten der Schnittpunkte $\Delta x$ zweier vertikal benachbarter
 Geraden und die Anzahl der Bildzeilen $n_y$, die von der Polygonkante noch geschnitten werden. Nun
 werden die Bildzeilen inkrementell durchlaufen. Dabei werden die Kanten in einer Bildzeile nach $x$
 des Schnittpunktes aufsteigend geordnet. Dann wird von $x$ der ersten Kante bis $x$ der zweiten Kante in der Liste
 jedes Pixel eingefärbt. Diese beiden Kanten werden inkrementiert und die nächsten beiden Kanten werden
 betrachtet, bis keine Kanten mehr in der Bildzeile übrig sind. Dann wird die nächste Bildzeile
-nach dem selben Schema behandelt. Eine Kante wird inkrementiert indem die Kante in die nächsthöhere Bildzeile verschoben
+nach dem selben Schema behandelt. Eine Kante wird inkrementiert, indem die Kante in die nächsthöhere Bildzeile verschoben
 wird, $x$ auf $x + \Delta x$ gesetzt und $n_y$ dekrementiert wird.
 
 

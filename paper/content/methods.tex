@@ -51,7 +51,7 @@ Szene wird dabei grob in die folgenden Schritte unterteilt:
        der Grafikkarte abgelegt. Für jede Lichtquelle wird dabei ein eigener Depth Buffer berechnet,
        quasi ein Abbild der Szene aus der Sicht des Lichts.
  \item Im zweiten Schritt werden die Depth Buffer auf die finale Sicht aus der ursprünglichen Kamera
-       projiziert. Diese projizierten Tiefeninformationen werden dann genutzt um zu prüfen, ob ein
+       projiziert. Diese projizierten Tiefeninformationen werden dann genutzt, um zu prüfen, ob ein
        Pixel im Schatten liegt oder nicht.
  \item Im letzten Schritt wird die Szene mit der ursprünglichen Kamera berechnet. Dabei wird anhand
        der vorher berechneten Depth Buffer für jeden Pixel geprüft, ob er in einem Schatten liegt.
@@ -96,7 +96,7 @@ Dabei wird die Silhouette des momentan betrachteten Objekt gebildet und durch je
 ein Strahl geschossen. Der Bereich, der von den Strahlen hinter dem Objekt (gesehen von der Lichtquelle
 aus) eingeschlossen wird, liegt damit im Schatten. Anschließend muss nur noch geprüft werden, ob ein zu
 zeichnender Pixel in einem dieser Bereiche liegt oder nicht. Die Shadow Volumes brauchen zwar mehr
-Resourcen als die einfachen Shadow Maps, sind aber dafür bedeutend präziser. In neuen Rendering-Pipelines
+Ressourcen als die einfachen Shadow Maps, sind aber dafür bedeutend präziser. In neuen Rendering-Pipelines
 können die Shadow Volumes auch vollständig auf der Grafikkarte generiert werden unter Zuhilfenahme von
 Geometrie-Shadern. \cite{shadowvol2014}
 

@@ -40,12 +40,15 @@ Eine Problematik die auch in den heutigen sehr realistischen Schattenberechnungs
 \subsection{Alternative Ansätze}
 
 Bei komplexen Szenen stößt die hier gezeigte Implementierung des Algorithmus durch verschiedene Faktoren an ihre Grenzen. Jedoch kann dieses Problem
-gelöst werden. Zum Einen gibt es die Möglichkeit Schatten komplett oder teilweise statisch zu berechnen.
-Dies ist möglich, wenn sich die Lichtquellen oder Objekte im Raum nicht oder nur teilweise bewegen. Das
-ist zum Beispiel der Fall wenn sich ein Objekt innerhalb des beschatteten Bereich bewegt ohne eine der
-Schattenkanten zu berühren.
-In jedem Fall können komplett statische Lightmaps, welche zu jedem Pixel in der Szene einen
-Beleuchtungswert speichern, mit dynamischen Lightmaps verrechnet werden um Rechenaufwand zu sparen. Weiterhin könnte den Rasterizer der Grafikkarte genutzt werden, um Polygone auf den Bildschirm zu zeichnen. Dieser ist trotz des momentan verwendeten sehr effizienten aktiven Kantenlisten Algorithmus viel schneller, da er die Beschleunigung durch die Grafikkarte nutzt. Weitere Optimierungen sind möglich.
+gelöst werden.
+
+Zum einen gibt es die Möglichkeit, Schatten komplett oder teilweise statisch zu berechnen.
+Dies ist möglich, wenn sich die Lichtquellen oder Objekte im Raum nicht bewegen oder wenn sich ein Objekt innerhalb
+des beschatteten Bereich bewegt, ohne eine der Schattenkanten zu berühren.
+In jedem Fall können komplett statische Lightmaps, welche zu jedem Pixel der Szene einen
+Beleuchtungswert speichern, mit dynamischen Lightmaps verrechnet werden um Rechenaufwand zu sparen.
+
+Zum anderen könnte der Rasterizer von der Grafikkarte genutzt werden, um Polygone auf den Bildschirm zu zeichnen. Dieser ist trotz des momentan verwendeten sehr effizienten aktiven Kantenlisten Algorithmus viel schneller, da er die Beschleunigung durch die Grafikkarte nutzt. Weitere Optimierungen sind möglich.
 
 \subsubsection*{Ray casting}
 
@@ -54,9 +57,9 @@ Raum werden dabei eine bestimmte festdefinierte Anzahl an Strahlen in alle Richt
 aus geschossen. Dabei laufen diese Strahlen bis zum ersten Punkt an dem sie mit einem Objekt kollidieren
 oder bis zum Rand des Bildes beziehungsweise des Simulationsbereichs.
 
-Im Vergleich zu dem von gewählten Verfahren müssten hier bedeutend mehr Strahlen berechnet werden um die
+Im Vergleich zu dem von gewählten Verfahren müssten hier bedeutend mehr Strahlen berechnet werden, um die
 selben präzisen Schatten zu erhalten. Je nach Distanz, die die Strahlen zurücklegen müssen, muss die Anzahl
-der Strahlen beim Ray casting erhöht werden um weiterhin genaue Schatten liefern zu können, denn die Strahlen
+der Strahlen beim Ray casting erhöht werden, um weiterhin genaue Schatten liefern zu können, denn die Strahlen
 laufen gemäß der Kreisumfangsformal mit steigendem Radius auseinander. Auf das implementierte Verfahren hat
 die Distanz zur Lichtquelle keinen Einfluss, denn es werden direkt die Ecken der Objekte betrachtet.
 
