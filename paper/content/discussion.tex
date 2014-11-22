@@ -1,8 +1,8 @@
 \section{Diskussion}
 
-Der entwickelte Ansatz deckt sehr viel der gegebenen Problemstellung ab. Schatten werden im zweidimensionalen gezeichent
+Der entwickelte Ansatz deckt sehr viel der gegebenen Problemstellung ab. Schatten werden im zweidimensionalen gezeichnet
 und weisen weich verlaufende Kanten auf. Verschiedene Objekte und Lichter können in die Szene gesetzt
-werden. Für viele Anwendungen zum Beispiel im Videospielebereich reicht dieser Ansatz aus. Jedoch
+werden. Für viele Anwendungen, zum Beispiel im Videospielebereich, reicht dieser Ansatz aus. Jedoch
 muss die Lösung spätestens bei der Übersetzung in den dreidimensionalen Raum erweitert werden.
 
 \subsection{Grenzen des gewählten Ansatz}
@@ -24,7 +24,7 @@ Algorithmus zu hoch um diese Methode mit komplexen Szenen in Echtzeitanwendungen
 Der entwickelte Algorithmus ist durch die genannten Einschränkungen am Besten in zweidimensionalen
 Videospielen einsetzbar. Dort können solche Berechnungen für das Sichtfeld des Spielers oder wie in
 der entwickelten Anwendung zur Schattenberechnung eingesetzt werden. Hier kann es auch interessant
-sein die Schattenberechnung zu erweitern und Licht komplexer darzustellen. Der erste Schritt zur
+sein, die Schattenberechnung zu erweitern und Licht komplexer darzustellen. Der erste Schritt zur
 Erweiterung in diese Richtung wäre die Einführung von farbigen Lichtern. Somit könnten farbliche
 Überlagerungen zur Erzeugung interessanter Effekte genutzt werden.
 
@@ -32,10 +32,10 @@ Weiterhin könnten die schon implementierten Materialien, welche bis jetzt nur z
 Farbe der Objekte in der Szene genutzt werden, mit Transparenz erweitert werden. Verschiedene
 Materialien brechen Licht in unterschiedlichen Weisen.
 
-Die Schattenberechnungsmethode bietet Möglichkeiten Lichtstreuung und -reflektion zu
+Die Schattenberechnungsmethode bietet Möglichkeiten, Lichtstreuung und -reflektion zu
 implementieren. Auch hierzu müssten die Materialien erweitert werden, jedoch könnten dann realistischere und grafisch ansprechendere Szenen dargestellt werden.
 
-Eine Problematik die auch in den heutigen sehr realistischen Schattenberechnungsalgorithmen bleibt ist die Lichtbeugung an Objektkanten. Diesen Effekt nähert der entwickelte Algorithmus mit der Nutzung vieler Punktlichtquellen anstelle einer flächenartigen Lichtquelle an. Darüber hinaus hat der Effekt in den meisten praktischen Anwendungen keine Bedeutung, da er nur sehr schwach und für das menschliche Auge nicht sichtbar ist.
+Eine Problematik die auch in den heutigen sehr realistischen Schattenberechnungsalgorithmen bleibt, ist die Lichtbeugung an Objektkanten. Diesen Effekt nähert der entwickelte Algorithmus mit der Nutzung vieler Punktlichtquellen anstelle einer flächenartigen Lichtquelle an. Darüber hinaus hat der Effekt in den meisten praktischen Anwendungen keine Bedeutung, da er nur sehr schwach und für das menschliche Auge nicht sichtbar ist.
 
 \subsection{Alternative Ansätze}
 
@@ -45,7 +45,7 @@ Dies ist möglich, wenn sich die Lichtquellen oder Objekte im Raum nicht oder nu
 ist zum Beispiel der Fall wenn sich ein Objekt innerhalb des beschatteten Bereich bewegt ohne eine der
 Schattenkanten zu berühren.
 In jedem Fall können komplett statische Lightmaps, welche zu jedem Pixel in der Szene einen
-Beleuchtungswert speichern, mit dynamischen Lightmaps verrechnet werden um Rechenaufwand zu sparen. Weiterhin könnte den Rasterizer der Grafikkarte genutzt werden um Polygone auf den Bildschirm zu zeichnen. Dieser ist trotz des momentan verwendeten sehr effizienten aktiven Kantenlisten Algorithmus viel schneller, da er die Beschleunigung durch die Grafikkarte nutzt. Weitere Optimierungen sind möglich.
+Beleuchtungswert speichern, mit dynamischen Lightmaps verrechnet werden um Rechenaufwand zu sparen. Weiterhin könnte den Rasterizer der Grafikkarte genutzt werden, um Polygone auf den Bildschirm zu zeichnen. Dieser ist trotz des momentan verwendeten sehr effizienten aktiven Kantenlisten Algorithmus viel schneller, da er die Beschleunigung durch die Grafikkarte nutzt. Weitere Optimierungen sind möglich.
 
 \subsubsection*{Ray casting}
 
