@@ -8,13 +8,13 @@ muss die Lösung spätestens bei der Erweiterung in den dreidimensionalen Raum e
 \subsection{Grenzen des gewählten Ansatz}
 
 Größter Kritikpunkt an dem gezeigten Verfahren ist die Beschränkung auf den zweidimensionalen Raum.
-Für einige Spiele- und Userinterfaceprojekte werden diese Schatten ausreichen, jedoch wird heutzutage
+Für einige Spiele- und Userinterfaceprojekte würden diese Schatten ausreichen, jedoch wird heutzutage
 viel Wert auf möglichst realitätsnahe Computergrafiken in Filmen und großen Videospieleproduktionen
 gelegt. Dafür werden die in Kapitel \ref{sec:methods} beschriebenen Methoden benötigt.
 
-Die entwickelter Anwendung ist auf Rechtecke ohne Drehungen im Raum beschränkt. Jedoch kann diese
-signifikante Einschränkung leicht behoben werden, da der momentane Code mit leichten Modifikationen
-auch andere Formen unterstützen sollte.
+Die entwickelte Anwendung ist auf Rechtecke im Raum beschränkt, die an den Koordinatenachsen
+ausgerichtet sind. Jedoch kann diese signifikante Einschränkung leicht behoben werden, da der
+momentane Programmcode mit leichten Modifikationen auch andere Formen unterstützen kann.
 
 Die Performance der Berechnungen ist ein weiterer Kritikpunkt der entwickelten Methode. Die Laufzeit
 steigt zwar in Abhängigkeit der Lichter als auch der Objekte auf dem Bildschirm linear an, jedoch
@@ -38,13 +38,17 @@ realistischere Szenen dargestellt werden.
 
 Eine Problematik die auch in den heutigen sehr realistischen Schattenberechnungsalgorithmen bleibt
 ist die Lichtbeugung an Objektkanten. Diesen Effekt nähert der entwickelte Algorithmus mit der
-Nutzung vieler Punktlichtquellen anstelle einer flächenartigen Lichtquelle an.
+Nutzung vieler Punktlichtquellen anstelle einer flächenartigen Lichtquelle an. Darüberhinaus hat
+der Effekt in den meisten praktischen Anwendungen keine Bedeutung, da er nur sehr schwach ist und
+für das menschliche Auge nicht sichtbar ist.
 
 \subsection{Alternative Ansätze}
 
 Performanceprobleme bei komplexen Szenen sind eine Grenze des Algorithmus, jedoch kann dieses Problem
 gelöst werden. Zum einen gibt es die Möglichkeit Schatten komplett oder teilweise statisch zu berechnen.
-Dies ist möglich, wenn sich die Lichtquellen oder Objekte im Raum nicht oder nur teilweise bewegen.
+Dies ist möglich, wenn sich die Lichtquellen oder Objekte im Raum nicht oder nur teilweise bewegen. Das
+ist zum Beispiel der Fall wenn sich ein Objekt innerhalb des beschatteten Bereich bewegt ohne eine der
+Schattenkanten zu berühren.
 In einen Fall könnten komplett statische Lichtmaps, welche zu jedem Pixel in der Szene einen
 Beleuchtungswert speichern, verwendet werden, sonst könnten statische Lichtmaps mit dynamisch berechneten
 verrechnet werden um Rechenaufwand zu sparen. Weiterhin könnte man den Rasterizer der Grafikkarte nutzen
