@@ -78,8 +78,26 @@ Objekte können mit Ray Tracing realistisch belichtet und beschattet werden.
 Mit der hohen Präzision von Ray Tracing kommt auch die entsprechend hohe Komplexität, sowohl für die
 Implementierung als auch für die Laufzeit. Das Berechnen vergleichsweise einfacher Szenen kann mit
 aktivem Ray Tracing mehrere Minuten dauern, was es für Schattenberechnung in Echtzeitanwendungen
-unbrauchbar macht.
+unbrauchbar macht. Im Bereich der Computer Generated Imagery in der Filmproduktion findet es für die
+Berechnung realistischer Schatten und in vollständig oder teilweise generierten Szenen. Hier werden
+während der Produktion jedoch sehr niedrige Auflösungen (=Anzahl der Strahlen) verwendet um den
+Rechenaufwand gering zu halten und schneller Ergebnisse zu erhalten.
 
 \subsection{Shadow Volumes}
 
-Schatten zum Würfel
+Das "`Shadow Volumes"'-Verfahren verfolgt den Ansatz, das Polygon des von einem Objekt verdeckten Bereichs
+gesehen von der Lichtquelle zu berechnen. Bei diesem Ansatz agieren die Lichtquellen also ebenfalls als
+Kamera, die je nach Art der Lichtquelle, die von dem Licht betroffenen Objekte in der Szene anschaut.
+Dabei wird die Silhouette des momentan betrachteten Objekt gebildet und durch jeden Vertex (Eckpunkt)
+ein Strahl geschossen. Der Bereich, der von den Strahlen hinter dem Objekt (gesehen von der Lichtquelle
+aus) eingeschlossen wird, liegt damit im Schatten. Anschließend muss nur noch geprüft werden, ob ein zu
+zeichnender Pixel in einem dieser Bereiche liegt oder nicht. Die Shadow Volumes brauchen zwar mehr
+Resourcen als die einfachen Shadow Maps, sind aber dafür bedeutend präziser. In neuen Rendering-Pipelines
+können die Shadow Volumes auch vollständig auf der Grafikkarte generiert werden mit Hilfe von
+Geometrie-Shadern.
+
+\subsection*{Grenzen}
+
+Auch hier werden wie bei den Shadow Maps normalerweise nur harte Schatten berechnet, die aber ebenfalls
+durch verschiedene Methoden weicher gezeichnet werden können, was in den üblichen Echtzeitanwendungen wie
+Spielen ausreichend ist, auch wenn es kein realistisches Bild gibt.
