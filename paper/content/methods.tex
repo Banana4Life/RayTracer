@@ -3,7 +3,7 @@
 
 Das Problem ist, im zweidimensionalen Raum realistische Schatten zu berechnen, die wie echte
 Schatten aus den drei verschiedenen Bereichen "`Umbra"', "`Penumbra"' und "`Antumbra"' bestehen.
-Also keine harten Schatten wie bei einem Punktlicht, sondern weiche Schatten und
+Also keine harten Schatten wie bei einem Punktlicht, sondern weiche Schatten und auch
 Überlagerungen von Schatten.
 
 \begin{figure}[t]
@@ -15,7 +15,7 @@ Also keine harten Schatten wie bei einem Punktlicht, sondern weiche Schatten und
 
 \subsection{Umbra, Penumbra und Antumbra}
 
-In der Theorie kann man bei Schatten 3 verschiedene Bereiche unterscheiden (Abbildung \ref{fig:umbra}):
+In der Theorie kann man bei Schatten 3 Bereiche unterscheiden (Abbildung \ref{fig:umbra}):
 \begin{enumerate}
  \item \emph{Umbra}, der Kernschatten, ist der Teil des Schattens der von keinerlei Licht erreicht wird.
        Wenn es nur eine Lichtquelle gibt, dann hat jeder Schatten einen Umbra.
@@ -32,23 +32,25 @@ Diese 3 separaten Bereiche eines Schatten sollten optisch realistisch dargestell
 Damit gilt also als Anforderung, dass Lichtquellen simuliert werden können, die eine Breite haben
 und nicht einfach nur ein Punkt sind.
 
+
 \subsection{Shadow Mapping}
 
 Das "`Shadow Mapping"'-Verfahren, auch "`Projective shadowing"' genannt, berechnet eine sehr einfache,
-aber dafür effiziente Annäherung für Schatten. Das Verfahren kann vollständig auf dem
+aber dafür auch effiziente Annäherung für Schatten. Das Verfahren kann vollständig auf dem
 Grafikprozessor ausgeführt werden, was nochmals zu einer Beschleunigung führt. Die Berechnung der
 Szene wird dabei grob in die folgenden Schritte unterteilt:
 
 \begin{enumerate}
- \item Als Erstes wird die Szene von der Sicht des Lichts aus berechnet. Dabei wird für Punktlichter
-       eine perspektivische Projektion verwendet, während für das Umgebungslicht (Sonnenlicht) eine
-       orthografische Projektion verwendet wird.
+ \item Als erstes wird die Szene von der Sicht des Lichts aus berechnet. Dabei wird für Punktlichter
+       (Lampen, Kerzen, ...) eine perspektivische Projektion verwendet, während für das Umgebungslicht
+       (Sonnenlicht) eine orthografische Projektion verwendet wird.
 
        Beim Berechnen der Szene in diesem Schritt werden Farben und Texturen in der Szene ignoriert,
-       denn es wird nur die Tiefe der Pixel benötigt um die Schatten, die in dem "`Depth Buffer"'
-       (Zwischenspeicher, der Tiefeninformationen zu Pixeln hält) auf der Grafikkarte abgelegt wird.
-       Für jede Lichtquelle wird dabei ein eigener Depth Buffer berechnet.
- \item Im zweiten Schritt werden die Depth Buffer aus der ursprünglichen Kamera auf die finale Sicht 
+       denn es wird nur die Tiefe der Pixel für die Schatten benötigt. Die Tiefeninformationen werden
+       in dem "`Depth Buffer"' (Zwischenspeicher, der Tiefeninformationen zu Pixeln hält) auf
+       der Grafikkarte abgelegt. Für jede Lichtquelle wird dabei ein eigener Depth Buffer berechnet,
+       quasi ein Abbild der Szene aus der Sicht des Lichts.
+ \item Im zweiten Schritt werden die Depth Buffer auf die finale Sicht aus der ursprünglichen Kamera
        projiziert. Diese projizierten Tiefeninformationen werden dann genutzt um zu prüfen, ob ein
        Pixel im Schatten liegt oder nicht.
  \item Im letzten Schritt wird die Szene mit der ursprünglichen Kamera berechnet. Dabei wird anhand
@@ -76,7 +78,7 @@ Objekte können mit Ray Tracing realistisch belichtet und beschattet werden. \ci
 
 \subsection*{Grenzen}
 
-Mit der hohen Präzision von Ray Tracing kommt auch eine entsprechend hohe Komplexität, sowohl für die
+Mit der hohen Präzision von Ray Tracing kommt auch die entsprechend hohe Komplexität, sowohl für die
 Implementierung als auch für die Laufzeit. Das Berechnen vergleichsweise einfacher Szenen kann mit
 aktivem Ray Tracing mehrere Minuten dauern, was es für Schattenberechnung in Echtzeitanwendungen
 unbrauchbar macht. Im Bereich der Computer Generated Imagery in der Filmproduktion findet es für die
@@ -86,19 +88,20 @@ Rechenaufwand gering zu halten und schneller Ergebnisse zu erhalten.
 
 \subsection{Shadow Volumes}
 
-Das "`Shadow Volumes"'-Verfahren verfolgt den Ansatz, das Polygon des von einem Objekt verdeckten Bereichs
-gesehen, von der Lichtquelle zu berechnen. Bei diesem Ansatz agieren die Lichtquellen also ebenfalls als
+Das "`Shadow Volumes"'-Verfahren verfolgt den Ansatz, ein Polygon zu errechnen, das den durch das
+Objekt verdeckten Bereich, also alles hinter dem Objekt, das die Lichtquelle nicht "`sehen"' kann,
+abbildet. Bei diesem Ansatz agieren die Lichtquellen also ebenfalls als
 Kamera, die je nach Art der Lichtquelle, die von dem Licht betroffenen Objekte in der Szene anschaut.
 Dabei wird die Silhouette des momentan betrachteten Objekt gebildet und durch jeden Vertex (Eckpunkt)
 ein Strahl geschossen. Der Bereich, der von den Strahlen hinter dem Objekt (gesehen von der Lichtquelle
 aus) eingeschlossen wird, liegt damit im Schatten. Anschließend muss nur noch geprüft werden, ob ein zu
 zeichnender Pixel in einem dieser Bereiche liegt oder nicht. Die Shadow Volumes brauchen zwar mehr
-Ressourcen als die einfachen Shadow Maps, sind aber dafür bedeutend präziser. In neuen Rendering-Pipelines
-können die Shadow Volumes unter Zuhilfenahme von Geometrie-Shadern auch vollständig auf der Grafikkarte generiert werden.
-\cite{shadowvol2014}
+Resourcen als die einfachen Shadow Maps, sind aber dafür bedeutend präziser. In neuen Rendering-Pipelines
+können die Shadow Volumes auch vollständig auf der Grafikkarte generiert werden unter Zuhilfenahme von
+Geometrie-Shadern. \cite{shadowvol2014}
 
 \subsection*{Grenzen}
 
 Auch hier werden wie bei den Shadow Maps normalerweise nur harte Schatten berechnet, die aber ebenfalls
 durch verschiedene Methoden weicher gezeichnet werden können, was in den üblichen Echtzeitanwendungen wie
-Spielen ausreichend ist, auch wenn es kein sehr realistisches Bild gibt.
+Spielen ausreichend ist, auch wenn es kein realistisches Bild gibt.
