@@ -55,6 +55,8 @@ Szene wird dabei grob in die folgenden Schritte unterteilt:
        der vorher berechneten Depth Buffer für jeden Pixel geprüft, ob er in einem Schatten liegt.
 \end{enumerate}
 
+\cite{shadowvol2014}
+
 \subsection*{Grenzen}
 
 Die Schatten, die mit diesem Verfahren berechnet werden, sind in der einfachsten Form harte Schatten,
@@ -70,7 +72,7 @@ Diese Strahlen werden dann über Reflektionen hinweg nachverfolgt bis sie schlus
 Lichtquelle endet. Damit wird die exakte Belichtung berechnet, für die Schatten wird dann jeder
 Kollisionspunkt betrachtet. Dort wird geprüft, ob dieser Punkt direkt von einer Lichtquelle
 beschienen werden kann. Ist das nicht der Fall, dann liegt der Punkt im Schatten. Auch transparente
-Objekte können mit Ray Tracing realistisch belichtet und beschattet werden.
+Objekte können mit Ray Tracing realistisch belichtet und beschattet werden. \cite{raytracing2014}
 
 \subsection*{Grenzen}
 
@@ -93,6 +95,7 @@ aus) eingeschlossen wird, liegt damit im Schatten. Anschließend muss nur noch g
 zeichnender Pixel in einem dieser Bereiche liegt oder nicht. Die Shadow Volumes brauchen zwar mehr
 Ressourcen als die einfachen Shadow Maps, sind aber dafür bedeutend präziser. In neuen Rendering-Pipelines
 können die Shadow Volumes unter Zuhilfenahme von Geometrie-Shadern auch vollständig auf der Grafikkarte generiert werden.
+\cite{shadowvol2014}
 
 \subsection*{Grenzen}
 
