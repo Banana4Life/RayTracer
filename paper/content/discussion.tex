@@ -1,29 +1,63 @@
 \section{Diskussion}
 
-Der entwickelte Ansatz deckt sehr viel der gegebenen Problemstellung ab. Schatten werden gezeichent und weisen weich verlaufende Kanten auf. Verschiedene Objekte und Lichter können in die Szene gesetzt werden. Für viele Anwendungen zum Beispiel im Videospielebereich reicht dieser Ansatz aus. Jedoch muss die Lösung spätestens bei der Erweiterung in den dreidimensionalen Raum erweitert werden.
+Der entwickelte Ansatz deckt sehr viel der gegebenen Problemstellung ab. Schatten werden gezeichent
+und weisen weich verlaufende Kanten auf. Verschiedene Objekte und Lichter können in die Szene gesetzt
+werden. Für viele Anwendungen zum Beispiel im Videospielebereich reicht dieser Ansatz aus. Jedoch
+muss die Lösung spätestens bei der Erweiterung in den dreidimensionalen Raum erweitert werden.
 
-\subsection{Die Grenzen des gewählten Ansatz}
+\subsection{Grenzen des gewählten Ansatz}
 
-Größter Kritikpunkt an dem gezeigten Verfahren ist die Beschränkung auf den zweidimensionalen Raum. Für einige Spiele- und Userinterfaceprojekte werden diese Schatten ausreichen, jedoch wird heutzutage viel Wert auf möglichst realitätsnahe Computergrafiken in Filmen und großen Videospieleproduktionen gelegt. Dafür werden die in Kapitel \ref{sec:methods} beschriebenen Methoden benötigt.
+Größter Kritikpunkt an dem gezeigten Verfahren ist die Beschränkung auf den zweidimensionalen Raum.
+Für einige Spiele- und Userinterfaceprojekte werden diese Schatten ausreichen, jedoch wird heutzutage
+viel Wert auf möglichst realitätsnahe Computergrafiken in Filmen und großen Videospieleproduktionen
+gelegt. Dafür werden die in Kapitel \ref{sec:methods} beschriebenen Methoden benötigt.
 
-Die entwickelter Anwendung ist auf Rechtecke ohne Drehungen im Raum beschränkt. Jedoch kann diese signifikante Einschränkung leicht behoben werden, da der momentane Code mit leichten Modifikationen auch andere Formen unterstützen sollte.
+Die entwickelter Anwendung ist auf Rechtecke ohne Drehungen im Raum beschränkt. Jedoch kann diese
+signifikante Einschränkung leicht behoben werden, da der momentane Code mit leichten Modifikationen
+auch andere Formen unterstützen sollte.
 
-Die Performance der Berechnungen ist ein weiterer Kritikpunkt der entwickelten Methode. Die Laufzeit steigt zwar in Abhängigkeit der Lichter als auch der Objekte auf dem Bildschirm linear an, jedoch ist Berechnungsdauer bei mehreren hundert Lichtern und Objekten im Verhältnis zur Komplexität des Algorithmus zu hoch um diese Methode mit komplexen Szenen in Echtzeitanwendungen einsetzen zu können. 
+Die Performance der Berechnungen ist ein weiterer Kritikpunkt der entwickelten Methode. Die Laufzeit
+steigt zwar in Abhängigkeit der Lichter als auch der Objekte auf dem Bildschirm linear an, jedoch
+ist Berechnungsdauer bei mehreren hundert Lichtern und Objekten im Verhältnis zur Komplexität des
+Algorithmus zu hoch um diese Methode mit komplexen Szenen in Echtzeitanwendungen einsetzen zu können.
 
-Der entwickelte Algorithmus ist durch die genannten Einschränkungen am Besten in zweidimensionalen Videospielen einsetzbar. Dort können solche Berechnungen für das Sichtfeld des Spielers oder wie in der entwickelten Anwendung zur Schattenberechnung eingesetzt werden. Hier kann es auch interessant sein die Schattenberechnung zu erweitern und Licht komplexer darzustellen. Der erste Schritt zur Erweiterung in diese Richtung wäre die Einführung von farbigen Lichtern. Somit könnten farbliche Überlagerungen zur Erzeugung interessanter Effekte genutzt werden.
+Der entwickelte Algorithmus ist durch die genannten Einschränkungen am Besten in zweidimensionalen
+Videospielen einsetzbar. Dort können solche Berechnungen für das Sichtfeld des Spielers oder wie in
+der entwickelten Anwendung zur Schattenberechnung eingesetzt werden. Hier kann es auch interessant
+sein die Schattenberechnung zu erweitern und Licht komplexer darzustellen. Der erste Schritt zur
+Erweiterung in diese Richtung wäre die Einführung von farbigen Lichtern. Somit könnten farbliche
+Überlagerungen zur Erzeugung interessanter Effekte genutzt werden.
 
-Weiterhin könnten die schon implementierten Materialien, welche bis jetzt nur zur Speicherung der Farbe der Objekte in der Szene genutzt werden, mit Transparenz erweitert werden. Verschiedene Materialien brechen Licht in unterschiedlichen Weisen.
+Weiterhin könnten die schon implementierten Materialien, welche bis jetzt nur zur Speicherung der
+Farbe der Objekte in der Szene genutzt werden, mit Transparenz erweitert werden. Verschiedene
+Materialien brechen Licht in unterschiedlichen Weisen.
 
-Die Schattenberechnungsmethode bietet auch Möglichkeiten Lichtstreuung und -reflektion zu implementieren. Auch hierzu müssten die Materialien erweitert werden, jedoch könnten dann realistischere Szenen dargestellt werden.
+Die Schattenberechnungsmethode bietet auch Möglichkeiten Lichtstreuung und -reflektion zu
+implementieren. Auch hierzu müssten die Materialien erweitert werden, jedoch könnten dann
+realistischere Szenen dargestellt werden.
 
-Eine Problematik die auch in den heutigen sehr realistischen Schattenberechnungsalgorithmen bleibt ist die Lichtbeugung an Objektkanten. Diesen Effekt nähert der entwickelte Algorithmus mit der Nutzung vieler Punktlichtquellen anstelle einer flächenartigen Lichtquelle an.
+Eine Problematik die auch in den heutigen sehr realistischen Schattenberechnungsalgorithmen bleibt
+ist die Lichtbeugung an Objektkanten. Diesen Effekt nähert der entwickelte Algorithmus mit der
+Nutzung vieler Punktlichtquellen anstelle einer flächenartigen Lichtquelle an.
 
 \subsection{Alternative Ansätze}
 
-Performanceprobleme bei komplexen Szenen sind eine Grenze des Algorithmus, jedoch kann dieses Problem gelöst werden. Zum einen gibt es die Möglichkeit Schatten komplett oder teilweise statisch zu berechnen. Dies ist möglich, wenn sich die Lichtquellen oder Objekte im Raum nicht oder nur teilweise bewegen. Im einen Fall könnten komplett statische Lichtmaps, welche zu jedem Pixel in der Szene einen Beleuchtungswert speichern, verwendet werden, sonst könnten statische Lichtmaps mit dynamisch berechneten verrechnet werden um Rechenaufwand zu sparen. Weiterhin könnte man den Rasterizer der Grafikkarte nutzen um Polygone auf den Bildschirm zu zeichnen. Dieser ist trotz der momentan sehr effizienten Implementierung viel schneller. Weitere Optimierungen sind sicherlich möglich.
+Performanceprobleme bei komplexen Szenen sind eine Grenze des Algorithmus, jedoch kann dieses Problem
+gelöst werden. Zum einen gibt es die Möglichkeit Schatten komplett oder teilweise statisch zu berechnen.
+Dies ist möglich, wenn sich die Lichtquellen oder Objekte im Raum nicht oder nur teilweise bewegen.
+In einen Fall könnten komplett statische Lichtmaps, welche zu jedem Pixel in der Szene einen
+Beleuchtungswert speichern, verwendet werden, sonst könnten statische Lichtmaps mit dynamisch berechneten
+verrechnet werden um Rechenaufwand zu sparen. Weiterhin könnte man den Rasterizer der Grafikkarte nutzen
+um Polygone auf den Bildschirm zu zeichnen. Dieser ist trotz der momentan sehr effizienten Implementierung
+viel schneller. Weitere Optimierungen sind sicherlich möglich.
 
 dreidimensionale Berechnung
 
 \subsection{Abdeckung der Problematik}
 
-Eine Schattenberechnung im zweidimensionalen Raum wurde implementiert. Diese können Umbra, Penumbra und Antumbra enthalten. Auch harte Schatten werden durch die Annäherung großer flächenartiger Lichtquellen durch viele kleine auf elegante Art und Weise vermieden und schön dargestellt. Für viele Videospiele im zweidimensionalen Raum reicht diese Art von Schattenberechnung aus, jedoch bleibt viel Erweiterungsspielraum. Weitere Implementierungen von farbigen Lichtern und Unterstützung von mehr möglichen Materialien sind für die Zukunft denkbar und mit dem entwickelten Code möglich.
+Eine Schattenberechnung im zweidimensionalen Raum wurde implementiert. Diese können Umbra, Penumbra und
+Antumbra enthalten. Auch harte Schatten werden durch die Annäherung großer flächenartiger Lichtquellen
+durch viele kleine auf elegante Art und Weise vermieden und schön dargestellt. Für viele Videospiele im
+zweidimensionalen Raum reicht diese Art von Schattenberechnung aus, jedoch bleibt viel
+Erweiterungsspielraum. Weitere Implementierungen von farbigen Lichtern und Unterstützung von mehr möglichen
+Materialien sind für die Zukunft denkbar und mit dem entwickelten Code möglich.
