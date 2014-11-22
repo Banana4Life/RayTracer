@@ -1,7 +1,7 @@
-RayTracer
-=========
+ShadowArea
+==========
 
-A scala ray tracing application.
+A scala based shadow simulation.
 
 Developers
 ----------
