@@ -55,13 +55,24 @@ verrechnet werden um Rechenaufwand zu sparen. Weiterhin könnte man den Rasteriz
 um Polygone auf den Bildschirm zu zeichnen. Dieser ist trotz der momentan sehr effizienten Implementierung
 viel schneller. Weitere Optimierungen sind sicherlich möglich.
 
-dreidimensionale Berechnung
+\subsubsection*{Ray casting}
+
+Ein alternativer Ansatz wäre "`Ray casting"' gewesen, eine einfache Form des Ray tracing. Im zweidimensionalen
+Raum werden dabei eine bestimmte festdefinierte Anzahl an Strahlen in alle Richtungen von jeder Lichtquelle
+aus geschossen. Dabei laufen diese Strahlen bis zum ersten Punkt an dem sie mit einem Objekt kollidieren
+oder bis zum Rand des Bildes beziehungsweise des Simulationsbereichs.
+
+Im Vergleich zu dem von gewählten Verfahren müssten hier bedeutend mehr Strahlen berechnet werden um die
+selben präzisen Schatten zu erhalten. Je nach Distanz, die die Strahlen zurücklegen müssen, muss die Anzahl
+der Strahlen beim Ray casting erhöht werden um weiterhin genaue Schatten liefern zu können, denn die Strahlen
+laufen gemäß der Kreisumfangsformal mit steigendem Radius auseinander. Auf das implementierte Verfahren hat
+die Distanz zur Lichtquelle keinen Einfluss, denn es werden direkt die Ecken der Objekte betrachtet.
 
 \subsection{Abdeckung der Problematik}
 
-Eine Schattenberechnung im zweidimensionalen Raum wurde implementiert. Diese können Umbra, Penumbra und
-Antumbra enthalten. Auch harte Schatten werden durch die Annäherung großer flächenartiger Lichtquellen
-durch viele kleine auf elegante Art und Weise vermieden und schön dargestellt. Für viele Videospiele im
-zweidimensionalen Raum reicht diese Art von Schattenberechnung aus, jedoch bleibt viel
-Erweiterungsspielraum. Weitere Implementierungen von farbigen Lichtern und Unterstützung von mehr möglichen
-Materialien sind für die Zukunft denkbar und mit dem entwickelten Code möglich.
+Eine Schattenberechnung im zweidimensionalen Raum wurde implementiert. Diese Schatten umfassen Umbra, Penumbra
+und Antumbra je nach Konstellation der Objekte und Lichter. Auch harte Schatten werden durch die Annäherung
+großer flächenartiger Lichtquellen durch viele kleine auf elegante Art und Weise vermieden und realitätsnah
+dargestellt. Für viele Videospiele im zweidimensionalen Raum reicht diese Art von Schattenberechnung aus,
+jedoch bleibt viel Erweiterungsspielraum. Weitere Implementierungen von farbigen Lichtern und Unterstützung
+von mehr möglichen Materialien sind für die Zukunft denkbar und mit dem entwickelten Code möglich.
