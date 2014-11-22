@@ -18,7 +18,7 @@ Dazu wird für jeden Pixel auf dem Bildschirm der Wert 1, äquivalent zu ``von a
 \end{figure}
 
 Im Folgenden wird die entwickelte Methode gezeigt um einen Schatten zu berechnen, wie er zum
-Beispiel in Abbildung \ref{fig:durch1} zu sehen ist. Um diesen Schatten darstellen zu können
+Beispiel in Abbildung \ref{fig:durch1} zu sehen ist. Um diesen Schatten darstellen zu können,
 werden nun zuerst die zwei Strahlen durch Eckpunkte des schattenwerfenden Objektes berechnet,
 die den größten Winkel zueinander haben.
 
@@ -41,12 +41,11 @@ des schattenwerfenden Objektes und die Position der Lichtquelle
 	L = \begin{pmatrix}  l_1 \\ l_2 \end{pmatrix}
 \end{equation}
 
-Geraden mit der Position des Eckpunktes als Ortsvektor und die Position der Lichtquelle subtrahiert von der Position des Eckpunktes als Richtungsvektor
-
+Geraden mit der Position des Eckpunktes als Ortsvektor und die Position der Lichtquelle subtrahiert
+von der Position des Eckpunktes als Richtungsvektor
 \begin{equation}
 	\vec{g} = \begin{pmatrix} p_1 \\ p_2 \end{pmatrix} + r \cdot \begin{pmatrix} p_1 - l_1 \\ p_2 - l_2 \end{pmatrix}
 \end{equation}
-
 gelegt (Abbildung \ref{fig:durch2}).
 
 \begin{figure}[t]
@@ -56,7 +55,9 @@ gelegt (Abbildung \ref{fig:durch2}).
 	\label{fig:durch3}
 \end{figure}
 
-Ausschlaggebend für die Silhouette des geworfenen Schatten sind die zwei Geraden, deren Winkel am weitesten auseinander liegt (Abbildung \ref{fig:durch3}). Um diese zu bestimmen wird rekursiv jedes Geradenpaar
+Ausschlaggebend für die Silhouette des geworfenen Schatten sind die zwei Geraden, deren Winkel am
+weitesten auseinander liegt (Abbildung \ref{fig:durch3}). Um diese zu bestimmen wird rekursiv jedes
+Geradenpaar
 
 \begin{equation}
   \begin{split}
@@ -71,7 +72,8 @@ durch den Winkel zwischen den beiden Richtungsvektoren der Geraden
 	\omega = \arccos{\left(\frac{\vec{m}_1 \cdot \vec{m}_2}{|\vec{m}_1| \cdot |\vec{m}_2|} \right)}
 \end{equation}
 
-mit dem vorherigen Geradenpaar mit dem größten Winkel zueinander verglichen und das Geradenpaar mit dem größeren Winkel zueinander zurückgegeben.
+mit dem vorherigen Geradenpaar mit dem größten Winkel zueinander verglichen und das Geradenpaar mit
+dem größeren Winkel zueinander zurückgegeben.
 
 \begin{figure}[t]
 	\centering
