@@ -51,7 +51,7 @@ Geraden mit Ortsvektor, Position des Eckpunktes, und Richtungsvektor, Position d
 subtrahiert von der Position des Eckpunktes
 
 \begin{equation}
-	\vec{g} = \left(\begin{array}{c} p_1 \\ p_2 \end{array}\right) + r * \left(\begin{array}{c} p_1 - l_1 \\ p_2 - l_2 \end{array}\right)
+	\vec{g} = \left(\begin{array}{c} p_1 \\ p_2 \end{array}\right) + r \cdot \left(\begin{array}{c} p_1 - l_1 \\ p_2 - l_2 \end{array}\right)
 \end{equation}
 
 gelegt (Abbildung \ref{fig:durch2}).
@@ -69,13 +69,13 @@ Ausschlaggebend für die Silhouette des geworfenen Schatten sind die zwei Gerade
 weitesten auseinander liegt (Abbildung \ref{fig:durch3}). Dazu wird rekursiv jedes Geradenpaar
 
 \begin{equation}
-	\vec{g}_1 = \vec{o}_1 + r * \vec{m}_1, \vec{g}_2 = \vec{o}_2 + s * \vec{m}_1
+	\vec{g}_1 = \vec{o}_1 + r \cdot \vec{m}_1, \vec{g}_2 = \vec{o}_2 + s \cdot \vec{m}_1
 \end{equation}
 
 durch den Winkel zwischen den beiden Richtungsvektoren der Geraden
 
 \begin{equation}
-	\omega = arccos(\vec{m}_1 * \vec{m}_2 / (|\vec{m}_1| * |\vec{m}_2|))
+	\omega = \arccos{\left(\frac{\vec{m}_1 \cdot \vec{m}_2}{|\vec{m}_1| \cdot |\vec{m}_2|} \right)}
 \end{equation}
 
 mit dem vorherig größten Geradenpaar verglichen und das mit dem größeren Winkel zurückgegeben.
@@ -93,7 +93,7 @@ eine Gerade durch die Ortsvektoren der zwei vorher bestimmten Geraden bestimmt (
 \ref{fig:durch4}).
 
 \begin{equation}
-	s: \vec{s} = \vec{o}_1 + t * \left(\begin{array}{c} o_21 - o_11 \\ o_22 - o_12 \end{array}\right)
+	s: \vec{s} = \vec{o}_1 + t \cdot \left(\begin{array}{c} o_{21} - o_{11} \\ o_{22} - o_{12} \end{array}\right)
 \end{equation}
 
 \begin{figure}[t]
