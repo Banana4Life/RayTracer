@@ -1,5 +1,5 @@
 {
+  "name": "ShadowArea",
   "description": "Calculates shadow areas.",
-  "authors": ["Jonas Dann", "Phillip Schichtel"],
-  "comments": []
+  "authors": ["Jonas Dann", "Phillip Schichtel"]
 }
